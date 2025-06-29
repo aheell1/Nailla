@@ -2,140 +2,176 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Nailla ✨</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+  <title>Nailla's Birthday</title>
   <style>
     body {
       margin: 0;
-      padding: 0;
-      background-color: #D8A7B1; /* Dusky Rose */
+      background-color: #DAA5A4; /* Dusky Rose */
       font-family: 'Segoe UI', sans-serif;
       overflow: hidden;
     }
 
-    /* Stylish header with animation */
-    .header-text {
+    .emoji {
       position: absolute;
-      top: 30px;
-      width: 100%;
-      text-align: center;
+      font-size: 20px;
+      animation: fall linear infinite;
+      user-select: none;
+      z-index: 1;
+    }
+
+    @keyframes fall {
+      0% { top: -50px; opacity: 1; }
+      100% { top: 100vh; opacity: 0.8; }
+    }
+
+    .title {
+      position: absolute;
+      top: 20%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       font-size: 28px;
-      font-family: 'Playfair Display', serif;
+      font-weight: bold;
+      font-style: italic;
       color: black;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeSlideIn 2.5s ease forwards;
       z-index: 2;
+      opacity: 0;
+      animation: fadeIn 2s ease-out forwards;
     }
 
-    @keyframes fadeSlideIn {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    @keyframes fadeIn {
+      to { opacity: 1; }
     }
 
-    /* Popup Box */
-    .popup {
+    .password-box {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
       background: white;
-      padding: 25px 30px;
-      border-radius: 15px;
-      box-shadow: 0 0 25px rgba(0,0,0,0.2);
+      padding: 20px 30px;
+      border-radius: 20px;
       text-align: center;
-      z-index: 2;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      z-index: 3;
     }
 
-    .popup input {
-      padding: 10px;
+    .password-box input {
+      padding: 10px 35px 10px 30px;
       font-size: 16px;
+      border-radius: 10px;
       border: 1px solid #aaa;
-      border-radius: 8px;
-      width: 200px;
-    }
-
-    .popup-container {
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      position: relative;
     }
 
     .lock-icon {
-      width: 20px;
-      height: 20px;
-      margin-left: 8px;
+      position: absolute;
+      margin-left: -190px;
+      margin-top: 13px;
+      font-size: 16px;
+      color: #555;
     }
 
-    .popup button {
+    #submit-btn {
       margin-top: 15px;
-      padding: 10px 20px;
-      background: #d48b9c;
-      color: white;
-      font-weight: bold;
+      padding: 8px 20px;
       border: none;
-      border-radius: 8px;
+      background-color: #d96d6d;
+      color: white;
+      border-radius: 10px;
+      font-weight: bold;
       cursor: pointer;
     }
 
-    /* Falling Emojis */
-    .emoji {
+    .popup-emoji {
       position: absolute;
-      font-size: 22px;
-      animation: fall linear infinite;
-      z-index: 1;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 60px;
+      z-index: 4;
+      animation: fadeIn 1s ease-in-out forwards;
+      text-align: center;
     }
 
-    @keyframes fall {
-      0% { top: -5%; opacity: 1; }
-      100% { top: 105%; opacity: 1; }
+    .popup-emoji p {
+      margin-top: 10px;
+      font-size: 20px;
+      font-weight: bold;
+      color: black;
     }
 
-    .hidden {
-      display: none;
+    #continue-btn {
+      margin-top: 20px;
+      padding: 10px 25px;
+      background-color: #000;
+      color: white;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+      border: none;
     }
   </style>
 </head>
 <body>
 
-  <!-- Animated Stylish Header -->
-  <div class="header-text">THIS WEBSITE IS CREATED FOR NAILLA✨</div>
-
-  <!-- Password Popup -->
-  <div class="popup" id="popup-box">
-    <div class="popup-container">
-      <input type="password" id="password" placeholder="Enter password">
-      <img class="lock-icon" src="https://cdn-icons-png.flaticon.com/512/3064/3064197.png" alt="lock">
-    </div>
-    <button onclick="checkPassword()">Continue</button>
-  </div>
-
+  <!-- Falling Emojis -->
   <script>
-    const emojis = ['🧸', '❤️'];
-
-    function createEmoji() {
+    const emojis = ['🧸', '♥'];
+    for (let i = 0; i < 100; i++) {
       const emoji = document.createElement('div');
       emoji.className = 'emoji';
-      emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+      emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
       emoji.style.left = Math.random() * 100 + 'vw';
-      emoji.style.animationDuration = (3 + Math.random() * 2) + 's';
+      emoji.style.animationDuration = (2 + Math.random() * 2) + 's';
+      emoji.style.fontSize = '14px';
       document.body.appendChild(emoji);
-
-      setTimeout(() => emoji.remove(), 6000);
     }
+  </script>
 
-    setInterval(createEmoji, 100); // continuous smooth
+  <!-- Title -->
+  <div class="title" id="titleText">𝙏𝙃𝙄𝙎 𝙒𝙀𝘽𝙎𝙄𝙏𝙀 𝙄𝙎 𝘾𝙍𝙀𝘼𝙏𝙀𝘿 𝙁𝙊𝙍 𝙉𝘼𝙄𝙇𝙇𝘼✨</div>
 
-    function checkPassword() {
-      const input = document.getElementById("password").value;
-      if (input === "nailla25") {
-        document.getElementById("popup-box").classList.add("hidden");
+  <!-- Password Box -->
+  <div class="password-box" id="passwordBox">
+    <div class="lock-icon">🔒</div>
+    <input type="password" id="passwordInput" placeholder="Enter Password">
+    <br>
+    <button id="submit-btn">Submit</button>
+  </div>
+
+  <!-- Result Emoji -->
+  <div id="resultEmoji" style="display:none;"></div>
+
+  <script>
+    const submitBtn = document.getElementById("submit-btn");
+    const passwordBox = document.getElementById("passwordBox");
+    const titleText = document.getElementById("titleText");
+    const resultEmoji = document.getElementById("resultEmoji");
+
+    submitBtn.onclick = () => {
+      const password = document.getElementById("passwordInput").value;
+      if (password === "nailla25") {
+        // Correct Password
+        titleText.style.display = "none";
+        passwordBox.style.display = "none";
+        resultEmoji.style.display = "block";
+        resultEmoji.innerHTML = `
+          <div class="popup-emoji">
+            ❤️<br><p>WELCOME NAILLA</p>
+            <button id="continue-btn">Continue</button>
+          </div>
+        `;
       } else {
-        alert("Incorrect password!");
+        // Wrong Password
+        resultEmoji.style.display = "block";
+        resultEmoji.innerHTML = `
+          <div class="popup-emoji">💔</div>
+        `;
+        setTimeout(() => {
+          resultEmoji.style.display = "none";
+        }, 1500);
       }
-    }
+    };
   </script>
 
 </body>
