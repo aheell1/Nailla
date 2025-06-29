@@ -19,12 +19,14 @@ body {
   height: 100%;
   z-index: 1;
   pointer-events: none;
+  overflow: hidden;
 }
 .float-item {
   position: absolute;
-  font-size: 1.8rem;
-  animation: floatUp 10s linear infinite;
-  opacity: 0.8;
+  font-size: 2.2rem;
+  animation: floatUp 6s linear infinite;
+  opacity: 1;
+  filter: drop-shadow(0 0 4px red);
 }
 .float-item:nth-child(1) { left: 10%; top: 100%; }
 .float-item:nth-child(2) { left: 30%; top: 110%; }
@@ -40,7 +42,7 @@ body {
 .delay5 { animation-delay: 10s; }
 
 @keyframes floatUp {
-  0% { transform: translateY(0); opacity: 0.8; }
+  0% { transform: translateY(0); opacity: 1; }
   100% { transform: translateY(-120vh); opacity: 0; }
 }
 
@@ -54,7 +56,8 @@ body {
 .welcome-box h1 {
   font-size: 2rem;
   margin-bottom: 2rem;
-  color: #d63384;
+  color: black;
+  font-weight: bold;
 }
 .highlight {
   color: #ff4da6;
