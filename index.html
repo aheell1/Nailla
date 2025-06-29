@@ -124,13 +124,13 @@
     /* Petal Animation */
     .petal {
       position: absolute;
-      width: 20px;
-      height: 20px;
-      background: radial-gradient(circle at 10px 10px, #ff4d6d 40%, transparent 41%);
+      width: 30px;
+      height: 30px;
+      background: radial-gradient(circle at 15px 15px, #ff4d6d 40%, transparent 41%);
       border-radius: 50%;
-      opacity: 0.7;
+      opacity: 0.8;
       z-index: 2;
-      animation: petalFall 6s linear infinite;
+      animation: petalFall 5s linear infinite;
     }
 
     @keyframes petalFall {
@@ -139,12 +139,11 @@
         opacity: 1;
       }
       100% {
-        transform: translate(200px, 100vh) rotate(360deg);
+        transform: translate(300px, 100vh) rotate(720deg);
         opacity: 0;
       }
     }
 
-    /* Audio hidden */
     audio {
       display: none;
     }
@@ -152,7 +151,7 @@
 </head>
 <body>
 
-<!-- Falling Emojis -->
+<!-- Falling Emojis 🍁 & ♥ -->
 <div id="emojiContainer"></div>
 
 <script>
@@ -187,8 +186,8 @@
 <!-- Result Emoji -->
 <div id="resultEmoji" style="display:none;"></div>
 
-<!-- Audio -->
-<audio id="bgMusic" src="https://dl.sndup.net/t7gx/baharon-phool-barsao-cut.mp3" autoplay></audio>
+<!-- Background Audio -->
+<audio id="bgMusic" src="https://dl.sndup.net/t7gx/baharon-phool-barsao-cut.mp3"></audio>
 
 <script>
   const submitBtn = document.getElementById("submit-btn");
@@ -200,14 +199,14 @@
   submitBtn.onclick = () => {
     const password = document.getElementById("passwordInput").value;
     if (password === "nailla25") {
-      // Stop falling emojis
+      // Stop emojis
       emojiList.forEach(e => e.remove());
 
-      // Hide title and password
+      // Hide input
       titleText.style.display = "none";
       passwordBox.style.display = "none";
 
-      // Show result
+      // Show welcome
       resultEmoji.style.display = "block";
       resultEmoji.innerHTML = `
         <div class="popup-emoji">
@@ -216,24 +215,23 @@
         </div>
       `;
 
-      // Play music
-      bgMusic.style.display = "block";
+      // Start audio manually (fix autoplay issue)
       bgMusic.play();
 
-      // Add flower petals
-      for (let i = 0; i < 50; i++) {
+      // Launch petals from left & right
+      for (let i = 0; i < 60; i++) {
         const petal = document.createElement("div");
         petal.className = "petal";
-        petal.style.left = (Math.random() < 0.5 ? -50 : window.innerWidth + 50) + "px";
+        const isLeft = Math.random() < 0.5;
+        petal.style.left = isLeft ? "-30px" : (window.innerWidth + 30) + "px";
         petal.style.top = Math.random() * -100 + "px";
         petal.style.animationDelay = Math.random() * 5 + "s";
         document.body.appendChild(petal);
       }
+
     } else {
       resultEmoji.style.display = "block";
-      resultEmoji.innerHTML = `
-        <div class="popup-emoji">💔</div>
-      `;
+      resultEmoji.innerHTML = <div class="popup-emoji">💔</div>;
       setTimeout(() => {
         resultEmoji.style.display = "none";
       }, 1500);
