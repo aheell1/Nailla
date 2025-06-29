@@ -1,1 +1,123 @@
-dd
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Nailla ❤</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #D8A7B1; /* Dusky Rose */
+      font-family: 'Segoe UI', sans-serif;
+      overflow: hidden;
+    }
+
+    .emoji {
+      position: absolute;
+      font-size: 16px;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      0% {
+        top: -5%;
+        opacity: 1;
+      }
+      100% {
+        top: 105%;
+        opacity: 1;
+      }
+    }
+
+    .header-text {
+      text-align: center;
+      font-size: 22px;
+      font-weight: 600;
+      margin-top: 30px;
+      color: #000;
+    }
+
+    .popup {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 20px 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      text-align: center;
+    }
+
+    .popup input {
+      padding: 10px;
+      font-size: 16px;
+      margin-right: 10px;
+      border: 1px solid #aaa;
+      border-radius: 8px;
+    }
+
+    .popup button {
+      padding: 10px 16px;
+      background: #d48b9c;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .popup img {
+      width: 18px;
+      vertical-align: middle;
+      margin-left: -26px;
+      margin-right: 8px;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header-text">This website is created for Nailla</div>
+
+  <div class="popup" id="popup-box">
+    <label>
+      <img src="https://cdn-icons-png.flaticon.com/512/3064/3064197.png" alt="lock">
+      <input type="password" id="password" placeholder="Enter password">
+    </label>
+    <button onclick="checkPassword()">Continue</button>
+  </div>
+
+  <script>
+    const emojis = ['🧸', '♥'];
+
+    function createEmoji() {
+      const emoji = document.createElement('div');
+      emoji.className = 'emoji';
+      emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+      emoji.style.left = Math.random() * 100 + 'vw';
+      emoji.style.animationDuration = (1.5 + Math.random()) + 's';
+      document.body.appendChild(emoji);
+
+      setTimeout(() => {
+        emoji.remove();
+      }, 4000);
+    }
+
+    setInterval(createEmoji, 100); // Fast emoji fall
+
+    function checkPassword() {
+      const pwd = document.getElementById("password").value;
+      if (pwd === "nailla25") {
+        document.getElementById("popup-box").classList.add("hidden");
+      } else {
+        alert("Incorrect password!");
+      }
+    }
+  </script>
+
+</body>
+</html>
