@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Nailla's Birthday</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
@@ -29,12 +30,13 @@
       top: 20%;
       left: 50%;
       transform: translate(-50%, -50%);
-      font-size: 28px;
+      font-size: 40px;
       font-weight: bold;
-      font-style: italic;
+      font-family: 'Great Vibes', cursive;
       color: black;
       z-index: 2;
       opacity: 0;
+      text-align: center;
       animation: fadeIn 2s ease-out forwards;
     }
 
@@ -53,20 +55,22 @@
       text-align: center;
       box-shadow: 0 0 10px rgba(0,0,0,0.3);
       z-index: 3;
+      position: relative;
     }
 
     .password-box input {
-      padding: 10px 35px 10px 30px;
+      padding: 10px 30px 10px 10px;
       font-size: 16px;
       border-radius: 10px;
       border: 1px solid #aaa;
+      width: 200px;
       position: relative;
     }
 
     .lock-icon {
       position: absolute;
-      margin-left: -190px;
-      margin-top: 13px;
+      top: 38px;
+      right: 42px;
       font-size: 16px;
       color: #555;
     }
@@ -87,7 +91,7 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      font-size: 60px;
+      font-size: 80px;
       z-index: 4;
       animation: fadeIn 1s ease-in-out forwards;
       text-align: center;
@@ -95,7 +99,7 @@
 
     .popup-emoji p {
       margin-top: 10px;
-      font-size: 20px;
+      font-size: 28px;
       font-weight: bold;
       color: black;
     }
@@ -133,8 +137,8 @@
 
   <!-- Password Box -->
   <div class="password-box" id="passwordBox">
-    <div class="lock-icon">🔒</div>
     <input type="password" id="passwordInput" placeholder="Enter Password">
+    <div class="lock-icon">🔒</div>
     <br>
     <button id="submit-btn">Submit</button>
   </div>
