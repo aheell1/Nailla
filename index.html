@@ -3,18 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <title>Nailla's Birthday</title>
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
-      background-color: #DAA5A4; /* Dusky Rose */
+      background-color: #DAA5A4;
       font-family: 'Segoe UI', sans-serif;
       overflow: hidden;
     }
 
     .emoji {
       position: absolute;
-      font-size: 20px;
+      font-size: 26px;
       animation: fall linear infinite;
       user-select: none;
       z-index: 1;
@@ -27,12 +27,12 @@
 
     .title {
       position: absolute;
-      top: 20%;
+      top: 15%;
       left: 50%;
       transform: translate(-50%, -50%);
-      font-size: 40px;
+      font-size: 48px;
       font-weight: bold;
-      font-family: 'Great Vibes', cursive;
+      font-family: 'Dancing Script', cursive;
       color: black;
       z-index: 2;
       opacity: 0;
@@ -50,29 +50,35 @@
       left: 50%;
       transform: translate(-50%, -50%);
       background: white;
-      padding: 20px 30px;
+      padding: 30px 40px;
       border-radius: 20px;
       text-align: center;
       box-shadow: 0 0 10px rgba(0,0,0,0.3);
       z-index: 3;
-      position: relative;
     }
 
-    .password-box input {
-      padding: 10px 30px 10px 10px;
+    .input-container {
+      position: relative;
+      display: inline-block;
+    }
+
+    .input-container input {
+      padding: 10px 40px 10px 10px;
       font-size: 16px;
       border-radius: 10px;
       border: 1px solid #aaa;
       width: 200px;
-      position: relative;
+      box-sizing: border-box;
     }
 
     .lock-icon {
       position: absolute;
-      top: 38px;
-      right: 42px;
-      font-size: 16px;
+      top: 50%;
+      right: 10px;
+      transform: translateY(-50%);
+      font-size: 18px;
       color: #555;
+      pointer-events: none;
     }
 
     #submit-btn {
@@ -91,7 +97,7 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      font-size: 80px;
+      font-size: 100px;
       z-index: 4;
       animation: fadeIn 1s ease-in-out forwards;
       text-align: center;
@@ -99,7 +105,7 @@
 
     .popup-emoji p {
       margin-top: 10px;
-      font-size: 28px;
+      font-size: 36px;
       font-weight: bold;
       color: black;
     }
@@ -114,69 +120,126 @@
       cursor: pointer;
       border: none;
     }
+
+    /* Petal Animation */
+    .petal {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: radial-gradient(circle at 10px 10px, #ff4d6d 40%, transparent 41%);
+      border-radius: 50%;
+      opacity: 0.7;
+      z-index: 2;
+      animation: petalFall 6s linear infinite;
+    }
+
+    @keyframes petalFall {
+      0% {
+        transform: translate(0, 0) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(200px, 100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* Audio hidden */
+    audio {
+      display: none;
+    }
   </style>
 </head>
 <body>
 
-  <!-- Falling Emojis -->
-  <script>
-    const emojis = ['🧸', '♥'];
-    for (let i = 0; i < 100; i++) {
-      const emoji = document.createElement('div');
-      emoji.className = 'emoji';
-      emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-      emoji.style.left = Math.random() * 100 + 'vw';
-      emoji.style.animationDuration = (2 + Math.random() * 2) + 's';
-      emoji.style.fontSize = '14px';
-      document.body.appendChild(emoji);
-    }
-  </script>
+<!-- Falling Emojis -->
+<div id="emojiContainer"></div>
 
-  <!-- Title -->
-  <div class="title" id="titleText">𝙏𝙃𝙄𝙎 𝙒𝙀𝘽𝙎𝙄𝙏𝙀 𝙄𝙎 𝘾𝙍𝙀𝘼𝙏𝙀𝘿 𝙁𝙊𝙍 𝙉𝘼𝙄𝙇𝙇𝘼✨</div>
+<script>
+  const emojis = ['🧸', '♥'];
+  const emojiContainer = document.getElementById("emojiContainer");
+  const emojiList = [];
 
-  <!-- Password Box -->
-  <div class="password-box" id="passwordBox">
+  for (let i = 0; i < 100; i++) {
+    const emoji = document.createElement('div');
+    emoji.className = 'emoji';
+    emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    emoji.style.left = Math.random() * 100 + 'vw';
+    emoji.style.animationDuration = (2 + Math.random() * 2) + 's';
+    emojiContainer.appendChild(emoji);
+    emojiList.push(emoji);
+  }
+</script>
+
+<!-- Title -->
+<div class="title" id="titleText">𝙏𝙃𝙄𝙎 𝙒𝙀𝘽𝙎𝙄𝙏𝙀 𝙄𝙎 𝘾𝙍𝙀𝘼𝙏𝙀𝘿 𝙁𝙊𝙍 𝙉𝘼𝙄𝙇𝙇𝘼✨</div>
+
+<!-- Password Box -->
+<div class="password-box" id="passwordBox">
+  <div class="input-container">
     <input type="password" id="passwordInput" placeholder="Enter Password">
     <div class="lock-icon">🔒</div>
-    <br>
-    <button id="submit-btn">Submit</button>
   </div>
+  <br>
+  <button id="submit-btn">Submit</button>
+</div>
 
-  <!-- Result Emoji -->
-  <div id="resultEmoji" style="display:none;"></div>
+<!-- Result Emoji -->
+<div id="resultEmoji" style="display:none;"></div>
 
-  <script>
-    const submitBtn = document.getElementById("submit-btn");
-    const passwordBox = document.getElementById("passwordBox");
-    const titleText = document.getElementById("titleText");
-    const resultEmoji = document.getElementById("resultEmoji");
+<!-- Audio -->
+<audio id="bgMusic" src="https://dl.sndup.net/t7gx/baharon-phool-barsao-cut.mp3" autoplay></audio>
 
-    submitBtn.onclick = () => {
-      const password = document.getElementById("passwordInput").value;
-      if (password === "nailla25") {
-        // Correct Password
-        titleText.style.display = "none";
-        passwordBox.style.display = "none";
-        resultEmoji.style.display = "block";
-        resultEmoji.innerHTML = `
-          <div class="popup-emoji">
-            ❤️<br><p>WELCOME NAILLA</p>
-            <button id="continue-btn">Continue</button>
-          </div>
-        `;
-      } else {
-        // Wrong Password
-        resultEmoji.style.display = "block";
-        resultEmoji.innerHTML = `
-          <div class="popup-emoji">💔</div>
-        `;
-        setTimeout(() => {
-          resultEmoji.style.display = "none";
-        }, 1500);
+<script>
+  const submitBtn = document.getElementById("submit-btn");
+  const passwordBox = document.getElementById("passwordBox");
+  const titleText = document.getElementById("titleText");
+  const resultEmoji = document.getElementById("resultEmoji");
+  const bgMusic = document.getElementById("bgMusic");
+
+  submitBtn.onclick = () => {
+    const password = document.getElementById("passwordInput").value;
+    if (password === "nailla25") {
+      // Stop falling emojis
+      emojiList.forEach(e => e.remove());
+
+      // Hide title and password
+      titleText.style.display = "none";
+      passwordBox.style.display = "none";
+
+      // Show result
+      resultEmoji.style.display = "block";
+      resultEmoji.innerHTML = `
+        <div class="popup-emoji">
+          ❤️<br><p>WELCOME NAILLA</p>
+          <button id="continue-btn">Continue</button>
+        </div>
+      `;
+
+      // Play music
+      bgMusic.style.display = "block";
+      bgMusic.play();
+
+      // Add flower petals
+      for (let i = 0; i < 50; i++) {
+        const petal = document.createElement("div");
+        petal.className = "petal";
+        petal.style.left = (Math.random() < 0.5 ? -50 : window.innerWidth + 50) + "px";
+        petal.style.top = Math.random() * -100 + "px";
+        petal.style.animationDelay = Math.random() * 5 + "s";
+        document.body.appendChild(petal);
       }
-    };
-  </script>
+    } else {
+      resultEmoji.style.display = "block";
+      resultEmoji.innerHTML = `
+        <div class="popup-emoji">💔</div>
+      `;
+      setTimeout(() => {
+        resultEmoji.style.display = "none";
+      }, 1500);
+    }
+  };
+</script>
 
 </body>
 </html>
