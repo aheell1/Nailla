@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Nailla ❤</title>
+  <title>Nailla ✨</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
@@ -12,53 +13,65 @@
       overflow: hidden;
     }
 
-    .emoji {
-      position: absolute;
-      font-size: 16px;
-      animation: fall linear infinite;
-    }
-
-    @keyframes fall {
-      0% {
-        top: -5%;
-        opacity: 1;
-      }
-      100% {
-        top: 105%;
-        opacity: 1;
-      }
-    }
-
+    /* Stylish header with animation */
     .header-text {
+      position: absolute;
+      top: 30px;
+      width: 100%;
       text-align: center;
-      font-size: 22px;
-      font-weight: 600;
-      margin-top: 30px;
-      color: #000;
+      font-size: 28px;
+      font-family: 'Playfair Display', serif;
+      color: black;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeSlideIn 2.5s ease forwards;
+      z-index: 2;
     }
 
+    @keyframes fadeSlideIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Popup Box */
     .popup {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
       background: white;
-      padding: 20px 30px;
-      border-radius: 12px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      padding: 25px 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 25px rgba(0,0,0,0.2);
       text-align: center;
+      z-index: 2;
     }
 
     .popup input {
       padding: 10px;
       font-size: 16px;
-      margin-right: 10px;
       border: 1px solid #aaa;
       border-radius: 8px;
+      width: 200px;
+    }
+
+    .popup-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lock-icon {
+      width: 20px;
+      height: 20px;
+      margin-left: 8px;
     }
 
     .popup button {
-      padding: 10px 16px;
+      margin-top: 15px;
+      padding: 10px 20px;
       background: #d48b9c;
       color: white;
       font-weight: bold;
@@ -67,11 +80,17 @@
       cursor: pointer;
     }
 
-    .popup img {
-      width: 18px;
-      vertical-align: middle;
-      margin-left: -26px;
-      margin-right: 8px;
+    /* Falling Emojis */
+    .emoji {
+      position: absolute;
+      font-size: 22px;
+      animation: fall linear infinite;
+      z-index: 1;
+    }
+
+    @keyframes fall {
+      0% { top: -5%; opacity: 1; }
+      100% { top: 105%; opacity: 1; }
     }
 
     .hidden {
@@ -81,37 +100,37 @@
 </head>
 <body>
 
-  <div class="header-text">This website is created for Nailla</div>
+  <!-- Animated Stylish Header -->
+  <div class="header-text">THIS WEBSITE IS CREATED FOR NAILLA✨</div>
 
+  <!-- Password Popup -->
   <div class="popup" id="popup-box">
-    <label>
-      <img src="https://cdn-icons-png.flaticon.com/512/3064/3064197.png" alt="lock">
+    <div class="popup-container">
       <input type="password" id="password" placeholder="Enter password">
-    </label>
+      <img class="lock-icon" src="https://cdn-icons-png.flaticon.com/512/3064/3064197.png" alt="lock">
+    </div>
     <button onclick="checkPassword()">Continue</button>
   </div>
 
   <script>
-    const emojis = ['🧸', '♥'];
+    const emojis = ['🧸', '❤️'];
 
     function createEmoji() {
       const emoji = document.createElement('div');
       emoji.className = 'emoji';
       emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
       emoji.style.left = Math.random() * 100 + 'vw';
-      emoji.style.animationDuration = (1.5 + Math.random()) + 's';
+      emoji.style.animationDuration = (3 + Math.random() * 2) + 's';
       document.body.appendChild(emoji);
 
-      setTimeout(() => {
-        emoji.remove();
-      }, 4000);
+      setTimeout(() => emoji.remove(), 6000);
     }
 
-    setInterval(createEmoji, 100); // Fast emoji fall
+    setInterval(createEmoji, 100); // continuous smooth
 
     function checkPassword() {
-      const pwd = document.getElementById("password").value;
-      if (pwd === "nailla25") {
+      const input = document.getElementById("password").value;
+      if (input === "nailla25") {
         document.getElementById("popup-box").classList.add("hidden");
       } else {
         alert("Incorrect password!");
