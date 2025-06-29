@@ -1,45 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Happy Birthday Nailla ❤✨</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <!-- Floating emojis -->
-  <div class="floating-container">
-    <!-- Multiple teddy and heart emojis -->
-    <span class="float-item">🧸</span>
-    <span class="float-item delay1">❤️</span>
-    <span class="float-item delay2">🧸</span>
-    <span class="float-item delay3">❤️</span>
-    <span class="float-item delay4">🧸</span>
-    <span class="float-item delay5">❤️</span>
+[12:22 AM, 6/30/2025] Nimra Iftkhar: <!-- Welcome box -->
+<div class="welcome-box" id="welcome-box">
+  <h1 style="color: black; font-weight: bold;">
+    This website is created for <span class="highlight">Nailla</span>
+  </h1>
+  <button id="continue-btn">Continue</button>
+</div>
+
+<!-- Password popup -->
+<div id="pw-overlay" class="hidden">
+  <div class="pw-box">
+    <h2>🔒 Enter the secret word</h2>
+    <input id="pw-input" type="password" placeholder="Password" />
+    <button id="pw-btn">Open</button>
+    <p id="pw-msg"></p>
   </div>
+</div>
 
-  <!-- Welcome box -->
-  <div class="welcome-box">
-    <h1>This website is created for <span class="highlight">Nailla</span></h1>
-    <button id="continue-btn">Continue</button>
-  </div>
+<!-- Main page (hidden for now) -->
+<main id="site" hidden>
+  <h1>Happy Birthday Nailla ❤✨</h1>
+  <h3>May your smile stay forever ✨</h3>
+</main>
 
-  <!-- Password popup -->
-  <div id="pw-overlay" class="hidden">
-    <div class="pw-box">
-      <h2>🔒 Enter the secret word</h2>
-      <input id="pw-input" type="password" placeholder="Password" />
-      <button id="pw-btn">Open</button>
-      <p id="pw-msg"></p>
-    </div>
-  </div>
-
-  <!-- Main page (hidden for now) -->
-  <main id="site" hidden>
-    <h1>Happy Birthday Nailla ❤✨</h1>
-    <h3>May your smile stay forever ✨</h3>
-  </main>
-
-  <script src="script.js"></script>
-</body>
-</html>
+<script src="script.js"></script>
+<script>
+  // When user clicks "Continue", show password popup
+  document.getElementById("continue-btn").onclick = () => {
+    document.getElementById("pw-overlay").classList.remove("hidden");
+    document.getElementById("welcome-box").style.display = "none"; // HIDE welcome msg
+  };
+</script>
