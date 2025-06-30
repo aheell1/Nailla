@@ -1,1 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>For Her 💐</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #000;
+      overflow: hidden;
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+    }
 
+    .music-box {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: linear-gradient(145deg, #ff7eb9, #ff65a3);
+      padding: 20px 30px;
+      border-radius: 20px;
+      box-shadow: 0 0 20px #ffb3c6;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 16px;
+      color: #fff;
+      transition: transform 0.2s;
+      z-index: 10;
+    }
+
+    .music-box:hover {
+      transform: scale(1.05);
+    }
+
+    .bouquet {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 200px;
+      height: 200px;
+      animation: buildBouquet 4s forwards ease-in-out;
+    }
+
+    .petal, .sepal {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      opacity: 0;
+    }
+
+    .petal {
+      background: pink;
+      animation: popPetal 2s forwards ease-in-out;
+    }
+
+    .sepal {
+      background: green;
+      animation: popSepal 2s forwards ease-in-out;
+    }
+
+    .petal1 { top: -50px; left: 80px; animation-delay: 0.3s; }
+    .petal2 { top: 50px; left: -30px; animation-delay: 0.6s; }
+    .petal3 { top: 50px; left: 160px; animation-delay: 0.9s; }
+    .sepal1 { top: 100px; left: 80px; animation-delay: 1.2s; }
+    .sepal2 { top: 130px; left: 90px; animation-delay: 1.5s; }
+
+    @keyframes popPetal {
+      to { opacity: 1; transform: translateY(20px); }
+    }
+
+    @keyframes popSepal {
+      to { opacity: 1; transform: translateY(-10px); }
+    }
+
+    @keyframes buildBouquet {
+      from { transform: translate(-50%, -50%) scale(0); }
+      to { transform: translate(-50%, -50%) scale(1); }
+    }
+
+    .falling-petal {
+      position: fixed;
+      width: 15px;
+      height: 15px;
+      background: #ff9ebc;
+      border-radius: 50%;
+      pointer-events: none;
+      opacity: 0.8;
+      animation: fall 8s linear infinite;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(-10%) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(110%) rotate(360deg); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Music Box -->
+  <div class="music-box" onclick="toggleMusic()">Play Music ❤</div>
+
+  <!-- Bouquet Animation -->
+  <div class="bouquet">
+    <div class="petal petal1"></div>
+    <div class="petal petal2"></div>
+    <div class="petal petal3"></div>
+    <div class="sepal sepal1"></div>
+    <div class="sepal sepal2"></div>
+  </div>
+
+  <!-- Audio -->
+  <audio id="bg-music" src="for her.mp3"></audio>
+
+  <!-- Falling Petals -->
+  <script>
+    const petalColors = ['#ffb6c1', '#ffc0cb', '#ff69b4', '#ff1493'];
+
+    function createPetal(side) {
+      const petal = document.createElement('div');
+      petal.classList.add('falling-petal');
+      petal.style.left = side === 'left'
+        ? ${Math.random() * 60}px
+        : ${window.innerWidth - Math.random() * 60}px;
+      petal.style.background = petalColors[Math.floor(Math.random() * petalColors.length)];
+      petal.style.animationDuration = ${5 + Math.random() * 3}s;
+      document.body.appendChild(petal);
+
+      setTimeout(() => petal.remove(), 8000);
+    }
+
+    setInterval(() => {
+      createPetal('left');
+      createPetal('right');
+    }, 300);
+
+    // Music toggle with safe fallback
+    const music = document.getElementById('bg-music');
+    function toggleMusic() {
+      if (music.paused) {
+        music.play().catch((error) => {
+          console.log("Music play was blocked. No worries.");
+        });
+      } else {
+        music.pause();
+      }
+    }
+  </script>
+</body>
+</html>
