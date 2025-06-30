@@ -41,6 +41,7 @@
       cursor: pointer;
       display: none;
       box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
+      transition: opacity 1s;
     }
 
     #continueBtn:hover {
@@ -60,7 +61,7 @@
     canvas.height = window.innerHeight;
 
     let particles = [];
-    const totalParticles = 1500; // speed up with fewer total particles
+    const totalParticles = 800; // reduced for faster completion
     let created = 0;
 
     function Heart(x, y, size) {
@@ -91,22 +92,25 @@
 
       for (let i = 0; i < particles.length; i++) {
         let p = particles[i];
-        if (p.alpha < 1) p.alpha += 0.02;
+        if (p.alpha < 1) p.alpha += 0.04; // faster fade-in
         p.draw();
       }
 
       if (created < totalParticles) {
-        for (let i = 0; i < 30; i++) { // Increased speed here
+        for (let i = 0; i < 100; i++) { // much faster creation
           let t = Math.PI - Math.random() * 2 * Math.PI;
           let r = 15 * (1 - Math.sin(t));
           let x = canvas.width / 2 + r * Math.cos(t) * 10;
           let y = canvas.height / 2 - r * Math.sin(t) * 10;
           particles.push(new Heart(x, y, 0.5 + Math.random() * 0.5));
           created++;
+          if (created >= totalParticles) break;
         }
       } else {
-        if (particles.length === totalParticles) {
-          document.getElementById("continueBtn").style.display = "block";
+        if (particles.length === totalParticles && !document.getElementById("continueBtn").style.display) {
+          setTimeout(() => {
+            document.getElementById("continueBtn").style.display = "block";
+          }, 800); // slight delay for polish
         }
       }
 
