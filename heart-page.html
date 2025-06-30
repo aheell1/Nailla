@@ -2,86 +2,115 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Heart Animation</title>
+  <title>Heart Formation</title>
   <style>
     body {
       margin: 0;
-      padding: 0;
-      background: #000;
       overflow: hidden;
+      background-color: black;
     }
 
-    .welcome-text {
+    #welcome {
       position: absolute;
-      top: 20px;
+      top: 30px;
       width: 100%;
       text-align: center;
-      font-size: 2em;
       color: white;
+      font-size: 48px;
       font-weight: bold;
-      letter-spacing: 2px;
+      letter-spacing: 5px;
+      font-family: 'Segoe UI', sans-serif;
     }
 
-    .heart {
-      position: absolute;
-      width: 100px;
-      height: 90px;
-      background: red;
-      transform: rotate(-45deg);
-      animation: float 4s linear infinite;
-    }
-
-    .heart::before,
-    .heart::after {
-      content: "";
-      position: absolute;
-      width: 100px;
-      height: 90px;
-      background: red;
-      border-radius: 50%;
-    }
-
-    .heart::before {
-      top: -50px;
-      left: 0;
-    }
-
-    .heart::after {
-      left: 50px;
-      top: 0;
-    }
-
-    @keyframes float {
-      0% {
-        transform: rotate(-45deg) translateY(0);
-        opacity: 1;
-      }
-      100% {
-        transform: rotate(-45deg) translateY(-1000px);
-        opacity: 0;
-      }
+    canvas {
+      display: block;
     }
   </style>
 </head>
 <body>
-
-  <div class="welcome-text">WELCOME</div>
+  <div id="welcome">WELCOME</div>
+  <canvas id="heartCanvas"></canvas>
 
   <script>
-    function createHeart() {
-      const heart = document.createElement('div');
-      heart.classList.add('heart');
-      heart.style.left = Math.random() * 100 + "vw";
-      heart.style.animationDuration = 2 + Math.random() * 2 + "s";
-      document.body.appendChild(heart);
+    const canvas = document.getElementById("heartCanvas");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 
-      setTimeout(() => {
-        heart.remove();
-      }, 4000);
+    const centerX = canvas.width / 2;
+    const centerY = canvas.height / 2;
+    const scale = 12;
+    const heartPoints = [];
+    const particles = [];
+
+    // Generate heart shape points
+    for (let t = 0; t < Math.PI * 2; t += 0.03) {
+      const x = scale * 16 * Math.pow(Math.sin(t), 3);
+      const y = -scale * (13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t));
+      heartPoints.push({ x: centerX + x, y: centerY + y });
     }
 
-    setInterval(createHeart, 200);
-  </script>
+    class Particle {
+      constructor() {
+        const edge = Math.floor(Math.random() * 4);
+        switch (edge) {
+          case 0: // Top
+            this.x = Math.random() * canvas.width;
+            this.y = 0;
+            break;
+          case 1: // Right
+            this.x = canvas.width;
+            this.y = Math.random() * canvas.height;
+            break;
+          case 2: // Bottom
+            this.x = Math.random() * canvas.width;
+            this.y = canvas.height;
+            break;
+          case 3: // Left
+            this.x = 0;
+            this.y = Math.random() * canvas.height;
+            break;
+        }
+        const target = heartPoints[Math.floor(Math.random() * heartPoints.length)];
+        this.tx = target.x;
+        this.ty = target.y;
+        this.progress = 0;
+        this.speed = 0.01 + Math.random() * 0.02;
+        this.size = 2 + Math.random() * 1.5;
+        this.color = "red";
+      }
 
+      update() {
+        this.progress += this.speed;
+        if (this.progress > 1) this.progress = 1;
+        this.x = this.x + (this.tx - this.x) * this.progress;
+        this.y = this.y + (this.ty - this.y) * this.progress;
+      }
+
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+      }
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      if (particles.length < 800) {
+        particles.push(new Particle());
+      }
+
+      for (const p of particles) {
+        p.update();
+        p.draw();
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  </script>
 </body>
 </html>
