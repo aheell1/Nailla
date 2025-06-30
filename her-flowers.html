@@ -1,1 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Nailla's Surprise</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: black;
+      overflow: hidden;
+      font-family: 'Segoe UI', sans-serif;
+    }
 
+    h1 {
+      position: absolute;
+      top: 20px;
+      width: 100%;
+      text-align: center;
+      color: white;
+      font-size: 24px;
+      font-weight: bold;
+      text-transform: uppercase;
+      z-index: 10;
+    }
+
+    #bouquet {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.1);
+      opacity: 0;
+      transition: transform 3s ease-in-out, opacity 3s ease-in-out;
+      z-index: 5;
+    }
+
+    #bouquet.show {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+    }
+
+    #petals-left, #petals-right {
+      position: absolute;
+      top: 0;
+      width: 50%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    #petals-left {
+      left: 0;
+    }
+
+    #petals-right {
+      right: 0;
+    }
+
+    .petal {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: url('https://i.ibb.co/SxZnHbq/rosepetal.png') no-repeat center/contain;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-100px) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    #continueBtn {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 12px 24px;
+      font-size: 18px;
+      border: none;
+      border-radius: 30px;
+      background: linear-gradient(to right, #fcbfdc, #ff80ab);
+      color: white;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 1s ease;
+      z-index: 10;
+      box-shadow: 0 0 10px rgba(255, 192, 203, 0.6);
+    }
+
+    #continueBtn:hover {
+      box-shadow: 0 0 15px rgba(255, 182, 193, 0.9);
+    }
+
+    #continueBtn.show {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>WAISE TO AAP POORA BAGHEECHA DESERVE KARTI HAIN LEKIN YAHAN ITNE HI LAG PAAYE</h1>
+
+  <!-- Flower Bouquet SVG -->
+  <div id="bouquet">
+    <img src="https://i.ibb.co/mSpF9gq/bouquet.png" alt="Bouquet" width="300">
+  </div>
+
+  <!-- Falling petals -->
+  <div id="petals-left"></div>
+  <div id="petals-right"></div>
+
+  <!-- Continue Button -->
+  <button id="continueBtn" onclick="window.location.href='her-wish.html'">Continue</button>
+
+  <script>
+    // Show bouquet after slight delay
+    setTimeout(() => {
+      document.getElementById('bouquet').classList.add('show');
+    }, 500);
+
+    // Show continue button after animation
+    setTimeout(() => {
+      document.getElementById('continueBtn').classList.add('show');
+    }, 3500);
+
+    // Create falling petals
+    function createPetals(containerId) {
+      const container = document.getElementById(containerId);
+      setInterval(() => {
+        const petal = document.createElement('div');
+        petal.classList.add('petal');
+        petal.style.left = Math.random() * 100 + '%';
+        petal.style.animationDuration = (3 + Math.random() * 3) + 's';
+        container.appendChild(petal);
+        setTimeout(() => petal.remove(), 7000);
+      }, 300);
+    }
+
+    createPetals('petals-left');
+    createPetals('petals-right');
+  </script>
+</body>
+</html>
