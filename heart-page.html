@@ -2,24 +2,24 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Heart Animation</title>
+  <title>Heart Formation</title>
   <style>
     body {
       margin: 0;
-      background-color: black;
       overflow: hidden;
-      color: white;
+      background-color: black;
       font-family: 'Segoe UI', sans-serif;
     }
 
-    h1 {
+    #welcome {
       position: absolute;
-      top: 20px;
+      top: 30px;
       width: 100%;
       text-align: center;
-      font-size: 3em;
-      font-weight: bold;
       color: white;
+      font-size: 48px;
+      font-weight: bold;
+      letter-spacing: 5px;
     }
 
     canvas {
@@ -28,96 +28,106 @@
 
     #continueBtn {
       position: absolute;
-      bottom: 40px;
+      bottom: 50px;
       left: 50%;
       transform: translateX(-50%);
       padding: 12px 24px;
       font-size: 18px;
       font-weight: bold;
-      background-color: white;
-      color: red;
+      background-color: #ff4d4d;
+      color: white;
       border: none;
-      border-radius: 10px;
+      border-radius: 30px;
       cursor: pointer;
       display: none;
-      box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
-      transition: opacity 1s;
+      box-shadow: 0 0 10px red;
+      transition: transform 0.3s;
     }
 
     #continueBtn:hover {
-      background-color: #ffe6e6;
+      transform: translateX(-50%) scale(1.05);
     }
   </style>
 </head>
 <body>
-  <h1>WELCOME</h1>
+  <div id="welcome">WELCOME</div>
   <canvas id="heartCanvas"></canvas>
-  <button id="continueBtn">CONTINUE</button>
+  <button id="continueBtn">Continue →</button>
 
   <script>
     const canvas = document.getElementById("heartCanvas");
     const ctx = canvas.getContext("2d");
+    const continueBtn = document.getElementById("continueBtn");
+
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    let particles = [];
-    const totalParticles = 800; // reduced for faster completion
-    let created = 0;
+    const centerX = canvas.width / 2;
+    const centerY = canvas.height / 2;
+    const scale = 12;
+    const heartPoints = [];
+    const particles = [];
 
-    function Heart(x, y, size) {
-      this.x = x;
-      this.y = y;
-      this.size = size;
-      this.alpha = 0;
+    // Generate heart shape points
+    for (let t = 0; t < Math.PI * 2; t += 0.03) {
+      const x = scale * 16 * Math.pow(Math.sin(t), 3);
+      const y = -scale * (13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t));
+      heartPoints.push({ x: centerX + x, y: centerY + y });
     }
 
-    Heart.prototype.draw = function () {
-      ctx.save();
-      ctx.translate(this.x, this.y);
-      ctx.scale(this.size, this.size);
-      ctx.beginPath();
-      ctx.moveTo(0, 0);
-      ctx.bezierCurveTo(0, -3, -5, -3, -5, 0);
-      ctx.bezierCurveTo(-5, 3, 0, 5, 0, 7);
-      ctx.bezierCurveTo(0, 5, 5, 3, 5, 0);
-      ctx.bezierCurveTo(5, -3, 0, -3, 0, 0);
-      ctx.closePath();
-      ctx.fillStyle = rgba(255,0,0,${this.alpha});
-      ctx.fill();
-      ctx.restore();
-    };
+    class Particle {
+      constructor() {
+        const edge = Math.floor(Math.random() * 4);
+        switch (edge) {
+          case 0: this.x = Math.random() * canvas.width; this.y = 0; break;
+          case 1: this.x = canvas.width; this.y = Math.random() * canvas.height; break;
+          case 2: this.x = Math.random() * canvas.width; this.y = canvas.height; break;
+          case 3: this.x = 0; this.y = Math.random() * canvas.height; break;
+        }
+        const target = heartPoints[Math.floor(Math.random() * heartPoints.length)];
+        this.tx = target.x;
+        this.ty = target.y;
+        this.progress = 0;
+        this.speed = 0.05 + Math.random() * 0.03; // Speed increased
+        this.size = 2 + Math.random() * 1.5;
+        this.color = "red";
+      }
+
+      update() {
+        this.progress += this.speed;
+        if (this.progress > 1) this.progress = 1;
+        this.x = this.x + (this.tx - this.x) * this.progress;
+        this.y = this.y + (this.ty - this.y) * this.progress;
+      }
+
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+      }
+    }
 
     function animate() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      for (let i = 0; i < particles.length; i++) {
-        let p = particles[i];
-        if (p.alpha < 1) p.alpha += 0.04; // faster fade-in
-        p.draw();
+      if (particles.length < 1000) {
+        particles.push(new Particle());
       }
 
-      if (created < totalParticles) {
-        for (let i = 0; i < 100; i++) { // much faster creation
-          let t = Math.PI - Math.random() * 2 * Math.PI;
-          let r = 15 * (1 - Math.sin(t));
-          let x = canvas.width / 2 + r * Math.cos(t) * 10;
-          let y = canvas.height / 2 - r * Math.sin(t) * 10;
-          particles.push(new Heart(x, y, 0.5 + Math.random() * 0.5));
-          created++;
-          if (created >= totalParticles) break;
-        }
-      } else {
-        if (particles.length === totalParticles && !document.getElementById("continueBtn").style.display) {
-          setTimeout(() => {
-            document.getElementById("continueBtn").style.display = "block";
-          }, 800); // slight delay for polish
-        }
+      for (const p of particles) {
+        p.update();
+        p.draw();
       }
 
       requestAnimationFrame(animate);
     }
 
     animate();
+
+    // Show "Continue" button after ~3 seconds
+    setTimeout(() => {
+      continueBtn.style.display = 'block';
+    }, 3000);
   </script>
 </body>
 </html>
