@@ -8,6 +8,7 @@
       margin: 0;
       overflow: hidden;
       background-color: black;
+      font-family: 'Segoe UI', sans-serif;
     }
 
     #welcome {
@@ -19,21 +20,45 @@
       font-size: 48px;
       font-weight: bold;
       letter-spacing: 5px;
-      font-family: 'Segoe UI', sans-serif;
     }
 
     canvas {
       display: block;
+    }
+
+    #continueBtn {
+      position: absolute;
+      bottom: 50px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 12px 24px;
+      font-size: 18px;
+      font-weight: bold;
+      background-color: #ff4d4d;
+      color: white;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      display: none;
+      box-shadow: 0 0 10px red;
+      transition: transform 0.3s;
+    }
+
+    #continueBtn:hover {
+      transform: translateX(-50%) scale(1.05);
     }
   </style>
 </head>
 <body>
   <div id="welcome">WELCOME</div>
   <canvas id="heartCanvas"></canvas>
+  <button id="continueBtn">Continue <span style="padding-left: 6px;">&#8594;</span></button>
 
   <script>
     const canvas = document.getElementById("heartCanvas");
     const ctx = canvas.getContext("2d");
+    const continueBtn = document.getElementById("continueBtn");
+
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
@@ -43,7 +68,6 @@
     const heartPoints = [];
     const particles = [];
 
-    // Generate heart shape points
     for (let t = 0; t < Math.PI * 2; t += 0.03) {
       const x = scale * 16 * Math.pow(Math.sin(t), 3);
       const y = -scale * (13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t));
@@ -54,28 +78,16 @@
       constructor() {
         const edge = Math.floor(Math.random() * 4);
         switch (edge) {
-          case 0: // Top
-            this.x = Math.random() * canvas.width;
-            this.y = 0;
-            break;
-          case 1: // Right
-            this.x = canvas.width;
-            this.y = Math.random() * canvas.height;
-            break;
-          case 2: // Bottom
-            this.x = Math.random() * canvas.width;
-            this.y = canvas.height;
-            break;
-          case 3: // Left
-            this.x = 0;
-            this.y = Math.random() * canvas.height;
-            break;
+          case 0: this.x = Math.random() * canvas.width; this.y = 0; break;
+          case 1: this.x = canvas.width; this.y = Math.random() * canvas.height; break;
+          case 2: this.x = Math.random() * canvas.width; this.y = canvas.height; break;
+          case 3: this.x = 0; this.y = Math.random() * canvas.height; break;
         }
         const target = heartPoints[Math.floor(Math.random() * heartPoints.length)];
         this.tx = target.x;
         this.ty = target.y;
         this.progress = 0;
-        this.speed = 0.01 + Math.random() * 0.02;
+        this.speed = 0.05 + Math.random() * 0.03;
         this.size = 2 + Math.random() * 1.5;
         this.color = "red";
       }
@@ -95,11 +107,16 @@
       }
     }
 
+    let continueShown = false;
+
     function animate() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      if (particles.length < 800) {
+      if (particles.length < 1000) {
         particles.push(new Particle());
+      } else if (!continueShown) {
+        continueBtn.style.display = 'block';
+        continueShown = true;
       }
 
       for (const p of particles) {
@@ -111,6 +128,10 @@
     }
 
     animate();
+
+    continueBtn.onclick = () => {
+      alert("Continue clicked!");
+    };
   </script>
 </body>
 </html>
