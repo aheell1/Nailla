@@ -22,9 +22,21 @@
 
     .container {
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       height: 60vh;
+    }
+
+    .password-label {
+      font-size: 20px;
+      font-weight: bold;
+      color: #000;
+      margin-bottom: 10px;
+    }
+
+    .password-box {
+      display: flex;
       flex-direction: row;
       gap: 10px;
     }
@@ -94,8 +106,11 @@
   <div class="heading">THIS WEBSITE IS CREATED FOR NAILLA✨</div>
 
   <div class="container">
-    <input type="password" id="password" placeholder="Enter Password">
-    <span class="lock-icon">🔒</span>
+    <div class="password-label">Enter Password</div>
+    <div class="password-box">
+      <input type="password" id="password" placeholder="Type here...">
+      <span class="lock-icon">🔒</span>
+    </div>
   </div>
 
   <div id="popup">💔 Wrong Password</div>
@@ -107,10 +122,8 @@
     passwordInput.addEventListener('keydown', function(e) {
       if (e.key === 'Enter') {
         if (passwordInput.value.trim() === 'nailla25') {
-          // Correct password - Next steps will be handled in next code
-          alert("Correct Password! (Next part coming soon...)");
+          // Correct password - No message for now
         } else {
-          // Show wrong password popup
           popup.style.display = 'block';
           setTimeout(() => {
             popup.style.display = 'none';
@@ -126,12 +139,8 @@
       emoji.style.left = Math.random() * 100 + 'vw';
       emoji.style.animationDuration = 3 + Math.random() * 2 + 's';
       emoji.style.fontSize = (30 + Math.random() * 30) + 'px';
-
-      // Randomly choose 🖤 or 🍁
       emoji.textContent = Math.random() < 0.5 ? '🖤' : '🍁';
-
       document.body.appendChild(emoji);
-
       setTimeout(() => {
         emoji.remove();
       }, 5000);
