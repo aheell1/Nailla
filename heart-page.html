@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Heart Animation</title>
+  <style>
+    body {
+      background-color: #000;
+      margin: 0;
+      overflow: hidden;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+
+    .welcome-text {
+      color: white;
+      font-size: 2em;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .heart {
+      width: 100px;
+      height: 90px;
+      position: relative;
+      transform: rotate(-45deg);
+      animation: pulse 1s infinite;
+      margin: 0 auto;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: "";
+      width: 100px;
+      height: 90px;
+      background: red;
+      position: absolute;
+      border-radius: 50%;
+    }
+
+    .heart::before {
+      top: -50px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: 50px;
+      top: 0;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: rotate(-45deg) scale(1);
+      }
+      50% {
+        transform: rotate(-45deg) scale(1.1);
+      }
+      100% {
+        transform: rotate(-45deg) scale(1);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="welcome-text">Welcome</div>
+    <div class="heart"></div>
+  </div>
+</body>
+</html>
