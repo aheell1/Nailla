@@ -122,7 +122,8 @@
     passwordInput.addEventListener('keydown', function(e) {
       if (e.key === 'Enter') {
         if (passwordInput.value.trim() === 'nailla25') {
-          // Correct password - No message for now
+          // Redirect to heart page
+          window.location.href = "heart-page.html";
         } else {
           popup.style.display = 'block';
           setTimeout(() => {
