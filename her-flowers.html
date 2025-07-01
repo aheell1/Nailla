@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Nailla's Bouquet</title>
   <style>
     html, body {
@@ -26,10 +26,11 @@
     /* Petal styles */
     .petal {
       position: fixed;
-      width: 25px;
-      height: 25px;
+      width: 20px;
+      height: 30px;
       background-color: red;
-      border-radius: 50%;
+      border-radius: 50% 50% 0 0;
+      transform: rotate(45deg);
       opacity: 0.8;
       animation: fall linear;
       z-index: 1;
@@ -52,9 +53,12 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
+      width: 200px;
+      height: 200px;
       display: flex;
-      flex-direction: column;
-      align-items: center;
+      flex-wrap: wrap;
+      align-content: center;
+      justify-content: center;
       z-index: 2;
     }
 
@@ -69,15 +73,37 @@
       animation: bloom 0.5s forwards;
     }
 
-    .flower:nth-child(1) { animation-delay: 0.5s; background-color: red; }
-    .flower:nth-child(2) { animation-delay: 1s; background-color: crimson; }
-    .flower:nth-child(3) { animation-delay: 1.5s; background-color: darkred; }
-    .flower:nth-child(4) { animation-delay: 2s; background-color: red; }
+    /* Delay to form bouquet */
+    .flower:nth-child(1) { animation-delay: 0.2s; }
+    .flower:nth-child(2) { animation-delay: 0.4s; }
+    .flower:nth-child(3) { animation-delay: 0.6s; }
+    .flower:nth-child(4) { animation-delay: 0.8s; }
+    .flower:nth-child(5) { animation-delay: 1s; }
+    .flower:nth-child(6) { animation-delay: 1.2s; }
+    .flower:nth-child(7) { animation-delay: 1.4s; }
+    .flower:nth-child(8) { animation-delay: 1.6s; }
+    .flower:nth-child(9) { animation-delay: 1.8s; }
 
     @keyframes bloom {
       to {
         opacity: 1;
         transform: scale(1);
+      }
+    }
+
+    .stem {
+      width: 10px;
+      height: 0;
+      background-color: green;
+      margin-top: 10px;
+      animation: growStem 1s forwards;
+      animation-delay: 2.5s;
+      align-self: center;
+    }
+
+    @keyframes growStem {
+      to {
+        height: 60px;
       }
     }
 
@@ -90,28 +116,14 @@
       opacity: 0;
       transform: scale(0);
       animation: showRibbon 0.5s forwards;
-      animation-delay: 2.8s;
+      animation-delay: 3.5s;
+      align-self: center;
     }
 
     @keyframes showRibbon {
       to {
         opacity: 1;
         transform: scale(1);
-      }
-    }
-
-    .stem {
-      width: 10px;
-      height: 0;
-      background-color: green;
-      margin-top: 5px;
-      animation: growStem 1s forwards;
-      animation-delay: 3.3s;
-    }
-
-    @keyframes growStem {
-      to {
-        height: 60px;
       }
     }
 
@@ -140,9 +152,14 @@
 </head>
 <body>
 
-  <h1>WAISE TO AAP POORA BAGHEECHA DESERVE KARTI HAIN LEKIN YAHAN ITNE HI LAG PAYE</h1>
+  <h1>WAISE TO AAP POORA BAGHEECHA DESERVE KARTI HAIN LEKIN YAHAN ITNE HI LAG PAAYE</h1>
 
   <div id="bouquet">
+    <div class="flower"></div>
+    <div class="flower"></div>
+    <div class="flower"></div>
+    <div class="flower"></div>
+    <div class="flower"></div>
     <div class="flower"></div>
     <div class="flower"></div>
     <div class="flower"></div>
@@ -154,7 +171,7 @@
   <button id="continueBtn" onclick="window.location.href='her-wish.html'">Continue → ❤</button>
 
   <script>
-    // Create petals falling from both sides
+    // Petal generator
     function createPetal(side) {
       const petal = document.createElement('div');
       petal.classList.add('petal');
@@ -165,24 +182,21 @@
         petal.style.left = window.innerWidth - (Math.random() * 100) + 'px';
       }
 
-      const duration = Math.random() * 3 + 3; // 3–6 seconds
+      const duration = Math.random() * 3 + 3;
       petal.style.animationDuration = duration + 's';
 
       document.body.appendChild(petal);
 
-      setTimeout(() => {
-        petal.remove();
-      }, duration * 1000);
+      setTimeout(() => petal.remove(), duration * 1000);
     }
 
-    // Start petals falling every 300ms
     setInterval(() => createPetal('left'), 300);
     setInterval(() => createPetal('right'), 300);
 
-    // Show continue button after 5s
+    // Show continue button after bouquet complete
     setTimeout(() => {
       document.getElementById('continueBtn').style.display = 'block';
-    }, 5000);
+    }, 4500);
   </script>
 
 </body>
