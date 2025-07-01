@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Letter Reveal</title>
+  <style>
+    body {
+      margin: 0;
+      background: black;
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    h1 {
+      color: gold;
+      font-size: 2.5em;
+      font-family: 'Brush Script MT', cursive;
+      font-weight: bold;
+      margin-top: -50px;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .emoji-row {
+      font-size: 4em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .emoji-row:hover {
+      transform: scale(1.1);
+    }
+
+    .heart {
+      font-size: 1.5em;
+      margin: 0 10px;
+    }
+
+    .letter {
+      width: 80%;
+      max-width: 500px;
+      background: linear-gradient(to bottom, #f9f3e9, #e9decf);
+      color: #4b2e00;
+      padding: 30px;
+      border: 4px double #c7a35b;
+      border-radius: 10px;
+      font-family: 'Georgia', serif;
+      font-size: 1.2em;
+      box-shadow: 0 0 40px rgba(255, 215, 0, 0.3);
+      display: none;
+      animation: openLetter 1s ease forwards;
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    @keyframes openLetter {
+      0% {
+        transform: scaleY(0);
+        opacity: 0;
+      }
+      100% {
+        transform: scaleY(1);
+        opacity: 1;
+      }
+    }
+
+    .continue-btn {
+      display: none;
+      margin-top: 20px;
+      font-size: 1.1em;
+      color: white;
+      background: #f4a8c7;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    .continue-btn:hover {
+      background: #f88db5;
+    }
+
+    .continue-btn span {
+      margin-left: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>CLICK ON LETTER</h1>
+
+  <div class="emoji-row" onclick="showLetter()">
+    ✉️ <div class="heart">❤</div> ✉️
+  </div>
+
+  <div class="letter" id="letter">
+    <p>
+      Mere jazbaat lafzon mein utarna mushkil hai,<br>
+      Magar phir bhi, is chhoti si chitthi mein tumhare liye pyaar bhar diya hai... 💌<br><br>
+      Tum meri muskurahat ho, meri subah ka noor aur raat ki dua ho.<br>
+      Har din, har lamha tumhara shukriya karta hoon...❤
+    </p>
+  </div>
+
+  <button class="continue-btn" id="continueBtn" onclick="window.location.href='dive.html'">
+    Continue <span>→ ❤</span>
+  </button>
+
+  <script>
+    function showLetter() {
+      const letter = document.getElementById('letter');
+      const btn = document.getElementById('continueBtn');
+      letter.style.display = 'block';
+      setTimeout(() => {
+        btn.style.display = 'inline-block';
+      }, 1200);
+    }
+  </script>
+</body>
+</html>
