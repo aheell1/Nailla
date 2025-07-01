@@ -12,19 +12,19 @@
       font-family: 'Segoe UI', sans-serif;
     }
 
-    /* Moving Banner */
+    /* Banner */
     .banner {
       width: 100%;
       white-space: nowrap;
       overflow: hidden;
       position: absolute;
       top: 0;
+      background: #ffc0cb; /* Baby pink */
       color: white;
       font-size: 2rem;
       font-weight: bold;
       text-transform: uppercase;
       padding: 10px 0;
-      background: #ffc0cb; /* Baby pink background */
       z-index: 10;
     }
 
@@ -39,55 +39,55 @@
       100% { transform: translateX(-100%); }
     }
 
-    /* Age 25 */
+    /* Big 25 */
     .age {
       position: absolute;
       top: 35%;
       left: 50%;
       transform: translate(-50%, -50%);
-      font-size: 110px;
+      font-size: 120px;
       font-weight: bold;
       color: gold;
-      text-shadow: 0 0 10px #fff, 0 0 20px gold, 0 0 30px orange;
+      text-shadow: 0 0 10px white, 0 0 20px gold, 0 0 40px orange;
       animation: glow 2s infinite alternate;
       z-index: 5;
     }
 
     @keyframes glow {
       from {
-        text-shadow: 0 0 10px #fff, 0 0 20px gold;
+        text-shadow: 0 0 10px white, 0 0 20px gold;
       }
       to {
-        text-shadow: 0 0 20px orange, 0 0 30px red;
+        text-shadow: 0 0 20px orange, 0 0 40px red;
       }
     }
 
-    /* 🎂 Cake under 25 */
+    /* Big Cake Emoji Below */
     .cake-emoji {
       position: absolute;
       top: 52%;
       left: 50%;
       transform: translate(-50%, -50%);
-      font-size: 65px;
-      z-index: 5;
-      animation: bounce 2s infinite alternate;
+      font-size: 80px;
+      z-index: 6;
+      animation: bounce 1.5s infinite alternate;
     }
 
     @keyframes bounce {
       from { transform: translate(-50%, -50%) scale(1); }
-      to { transform: translate(-50%, -52%) scale(1.1); }
+      to { transform: translate(-50%, -52%) scale(1.05); }
     }
 
     /* Balloons */
     .balloon {
       position: absolute;
       bottom: -100px;
-      width: 50px;
-      height: 70px;
+      width: 60px;
+      height: 80px;
       background-color: red;
-      border-radius: 50% 50% 40% 40%; /* Rounded top, narrow bottom */
+      border-radius: 50% 50% 45% 45%;
       animation: floatUp 7s linear infinite;
-      opacity: 0.9;
+      opacity: 0.95;
       z-index: 1;
     }
 
@@ -139,15 +139,15 @@
 </head>
 <body>
 
-  <!-- Moving Banner -->
+  <!-- Top Banner -->
   <div class="banner">
     <div class="banner-text">🎉 HAPPY BIRTHDAY NAILLA 🎉 HAPPY BIRTHDAY NAILLA 🎉</div>
   </div>
 
-  <!-- Age Display -->
+  <!-- Big 25 -->
   <div class="age">25</div>
 
-  <!-- Cake Emoji -->
+  <!-- Cake Emoji Below -->
   <div class="cake-emoji">🎂</div>
 
   <!-- Continue Button -->
@@ -155,7 +155,7 @@
     Continue → ❤
   </button>
 
-  <!-- Balloons Generator -->
+  <!-- Balloon Script -->
   <script>
     const colors = ['red', 'pink', 'blue', 'green', 'yellow', 'purple', 'orange'];
 
@@ -164,7 +164,7 @@
       balloon.classList.add('balloon');
       balloon.style.left = Math.random() * 100 + 'vw';
       balloon.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-      balloon.style.animationDuration = (6 + Math.random() * 4) + 's';
+      balloon.style.animationDuration = (6 + Math.random() * 3) + 's';
       document.body.appendChild(balloon);
 
       setTimeout(() => {
@@ -172,7 +172,7 @@
       }, 10000);
     }
 
-    setInterval(createBalloon, 250); // Faster balloon rate for birthday effect
+    setInterval(createBalloon, 200); // Faster, party effect
   </script>
 
 </body>
