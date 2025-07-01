@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>3D Colorful Flower</title>
+  <title>Nailla's Surprise</title>
   <style>
     * {
       margin: 0;
@@ -11,132 +11,176 @@
     }
 
     body {
-      background-color: black;
+      background: black;
+      color: white;
       overflow: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
       height: 100vh;
-      font-family: sans-serif;
-      perspective: 1000px;
+      width: 100vw;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    h1 {
+      position: absolute;
+      top: 20px;
+      width: 100%;
+      text-align: center;
+      color: white;
+      font-weight: bold;
+      font-size: 1.2rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
     }
 
     .flower {
-      position: relative;
-      width: 30vmin;
-      height: 30vmin;
-      transform-style: preserve-3d;
-      animation: rotateFlower 15s linear infinite;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 200px;
+      height: 200px;
+      animation: rotate 12s linear infinite;
     }
 
     .petal {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      transform-style: preserve-3d;
+      width: 100px;
+      height: 50px;
+      background: white;
+      border-radius: 50% 50% 0 0;
+      transform-origin: bottom center;
+      opacity: 0.9;
+      box-shadow: 0 0 10px white;
+      animation: bloom 1s ease-out forwards;
     }
 
-    .box {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      transform-style: preserve-3d;
+    .petal:nth-child(1) { transform: rotate(0deg) translateY(-60px) scale(0); animation-delay: 0s; }
+    .petal:nth-child(2) { transform: rotate(45deg) translateY(-60px) scale(0); animation-delay: 0.1s; }
+    .petal:nth-child(3) { transform: rotate(90deg) translateY(-60px) scale(0); animation-delay: 0.2s; }
+    .petal:nth-child(4) { transform: rotate(135deg) translateY(-60px) scale(0); animation-delay: 0.3s; }
+    .petal:nth-child(5) { transform: rotate(180deg) translateY(-60px) scale(0); animation-delay: 0.4s; }
+    .petal:nth-child(6) { transform: rotate(225deg) translateY(-60px) scale(0); animation-delay: 0.5s; }
+    .petal:nth-child(7) { transform: rotate(270deg) translateY(-60px) scale(0); animation-delay: 0.6s; }
+    .petal:nth-child(8) { transform: rotate(315deg) translateY(-60px) scale(0); animation-delay: 0.7s; }
+
+    @keyframes bloom {
+      to { transform: rotate(var(--r)) translateY(-60px) scale(1); }
     }
 
-    .shape {
-      width: 0.5em;
-      height: 0.5em;
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 40px;
+      height: 40px;
+      background: white;
       border-radius: 50%;
-      background-color: currentColor;
-      box-shadow: 0 0 5px currentColor;
+      box-shadow: 0 0 15px white;
     }
 
-    @keyframes rotateFlower {
-      from {
-        transform: rotateY(0deg);
-      }
-      to {
-        transform: rotateY(360deg);
-      }
+    .petal-fall {
+      position: fixed;
+      top: -10vh;
+      width: 14px;
+      height: 24px;
+      background: white;
+      border-radius: 60% 40% 60% 40%;
+      opacity: 0.7;
+      pointer-events: none;
+      animation: fall 6s linear infinite, sway 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes fall {
+      to { transform: translateY(110vh) rotateZ(360deg); }
+    }
+
+    @keyframes sway {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(30px); }
+    }
+
+    .continue-btn {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 12px 24px;
+      background: #ff69b4;
+      border: none;
+      color: white;
+      font-size: 18px;
+      border-radius: 30px;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: bold;
+    }
+
+    .continue-btn.show {
+      opacity: 1;
+    }
+
+    .heart {
+      animation: beat 1s infinite;
+    }
+
+    @keyframes beat {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.2); }
     }
   </style>
 </head>
 <body>
-  <div class="flower"></div>
 
-  <script>
-    console.clear();
-    var doc = document;
-    var flower = doc.querySelector('.flower');
+<h1>WAISE TO AAP POORA BAGHEECHA DESERVE KARTI HAIN LEKIN YAHA ITNE HI LAG PAYE</h1>
 
-    var maxParts = 20;
-    var maxPetalsDef = 6;
-    var maxPetals = maxPetalsDef;
+<div class="flower" id="flower">
+  <div class="petal" style="--r: 0deg"></div>
+  <div class="petal" style="--r: 45deg"></div>
+  <div class="petal" style="--r: 90deg"></div>
+  <div class="petal" style="--r: 135deg"></div>
+  <div class="petal" style="--r: 180deg"></div>
+  <div class="petal" style="--r: 225deg"></div>
+  <div class="petal" style="--r: 270deg"></div>
+  <div class="petal" style="--r: 315deg"></div>
+  <div class="center"></div>
+</div>
 
-    var partsFontStepDef = 25 / maxParts;
-    var partsFontStep = partsFontStepDef;
-    var huetStep = 150 / maxParts;
+<button class="continue-btn" id="continueBtn">
+  Continue → <span class="heart">❤</span>
+</button>
 
-    createFlower();
+<script>
+  // Falling white petals from top-left & top-right
+  const totalPetals = 40;
+  for (let i = 0; i < totalPetals; i++) {
+    const petal = document.createElement('div');
+    petal.classList.add('petal-fall');
+    const leftOrRight = i % 2 === 0 ? 'left' : 'right';
+    petal.style[leftOrRight] = Math.random() * 50 + 'vw';
+    petal.style.animationDelay = (Math.random() * 5) + 's';
+    petal.style.opacity = Math.random() * 0.5 + 0.4;
+    document.body.appendChild(petal);
+  }
 
-    function createFlower() {
-      var angle = 360 / maxPetals;
-      for (var i = 0; i < maxPetals; i++) {
-        var petal = createPetal();
-        var currAngle = angle * i + 'deg';
-        var transform = 'transform: rotateY(' + currAngle + ') rotateX(-30deg) translateZ(9vmin)';
-        petal.setAttribute('style', transform);
-        flower.appendChild(petal);
-      }
-    }
+  // Show continue button after flower animation completes
+  setTimeout(() => {
+    document.getElementById('continueBtn').classList.add('show');
+  }, 2200); // after all petals bloom
 
-    function createPetal() {
-      var box = createBox(null, 0);
-      var petal = doc.createElement('div');
-      petal.classList.add('petal');
+  // Redirect on click
+  document.getElementById('continueBtn').addEventListener('click', () => {
+    window.location.href = 'her-wish.html';
+  });
+</script>
 
-      for (var i = 1; i <= maxParts; i++) {
-        newBox = createBox(box, i);
-        box = newBox;
-      }
-
-      petal.appendChild(box);
-      return petal;
-    }
-
-    function createBox(box, pos) {
-      var fontSize = partsFontStep * (maxParts - pos) + 'vmin';
-      var half = maxParts / 2;
-      var bright = '50';
-
-      if (pos < half + 1) {
-        fontSize = partsFontStep * pos + 'vmin';
-      } else {
-        bright = 10 + 40 / half * (maxParts - pos);
-      }
-
-      var color = 'hsl(' + huetStep * pos + ', 100%, ' + bright + '%)';
-
-      var newShape = doc.createElement('div');
-      newShape.classList.add('shape');
-
-      var newBox = doc.createElement('div');
-      newBox.classList.add('box');
-      var boxStyle = [
-        'color: ' + color,
-        'font-size: ' + fontSize
-      ].join(';');
-      newBox.setAttribute('style', boxStyle);
-
-      if (box) {
-        newBox.appendChild(box);
-      }
-
-      newBox.appendChild(newShape);
-      return newBox;
-    }
-  </script>
 </body>
 </html>
