@@ -20,7 +20,7 @@
       position: absolute;
       top: 0;
       background: linear-gradient(135deg, #f9ccd3, #ffe6f0); /* Blush pink gradient */
-      color: #a9445b; /* Dark rose */
+      color: #FFD700; /* Golden text */
       font-size: 2rem;
       font-weight: bold;
       text-transform: uppercase;
@@ -136,6 +136,28 @@
     .continue-btn:hover {
       background: #ff99aa;
     }
+
+    /* 🎊 Confetti */
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background-color: red;
+      opacity: 0.8;
+      z-index: 3;
+      animation: fallConfetti linear forwards;
+    }
+
+    @keyframes fallConfetti {
+      0% {
+        transform: translateY(-10vh) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
   </style>
 </head>
 <body>
@@ -156,7 +178,7 @@
     Continue → ❤
   </button>
 
-  <!-- Balloon Script -->
+  <!-- Balloons + Confetti Script -->
   <script>
     const colors = ['red', 'pink', 'blue', 'green', 'yellow', 'purple', 'orange'];
 
@@ -167,13 +189,24 @@
       balloon.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
       balloon.style.animationDuration = (6 + Math.random() * 3) + 's';
       document.body.appendChild(balloon);
-
-      setTimeout(() => {
-        balloon.remove();
-      }, 10000);
+      setTimeout(() => balloon.remove(), 10000);
     }
 
-    setInterval(createBalloon, 200); // Faster, party effect
+    function createConfetti() {
+      const confetti = document.createElement('div');
+      confetti.classList.add('confetti');
+      confetti.style.left = Math.random() * 100 + 'vw';
+      confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+      confetti.style.animationDuration = (3 + Math.random() * 3) + 's';
+      confetti.style.width = (6 + Math.random() * 4) + 'px';
+      confetti.style.height = (6 + Math.random() * 4) + 'px';
+      confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0%';
+      document.body.appendChild(confetti);
+      setTimeout(() => confetti.remove(), 7000);
+    }
+
+    setInterval(createBalloon, 200);    // Party balloons
+    setInterval(createConfetti, 100);   // Confetti rain
   </script>
 
 </body>
