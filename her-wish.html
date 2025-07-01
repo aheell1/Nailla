@@ -12,21 +12,26 @@
       font-family: 'Segoe UI', sans-serif;
     }
 
-    /* Banner */
+    /* Banner with zigzag */
     .banner {
       width: 100%;
       white-space: nowrap;
       overflow: hidden;
       position: absolute;
       top: 0;
-      background: linear-gradient(135deg, #f9ccd3, #ffe6f0); /* Blush pink gradient */
-      color: #FFD700; /* Golden text */
+      background: #FFE3E3; /* Light rose */
+      color: #800000; /* Deep maroon text */
       font-size: 2rem;
       font-weight: bold;
       text-transform: uppercase;
-      padding: 10px 0;
+      padding: 20px 0;
       z-index: 10;
-      text-shadow: 1px 1px 2px #ffffff;
+      text-shadow: 1px 1px 2px #fff0f0;
+      clip-path: polygon(
+        0 10px, 10px 0, 20px 10px, 30px 0, 40px 10px, 50px 0, 60px 10px, 70px 0, 80px 10px, 90px 0,
+        100% 10px, 100% calc(100% - 10px), 90% 100%, 80% calc(100% - 10px), 70% 100%, 60% calc(100% - 10px),
+        50% 100%, 40% calc(100% - 10px), 30% 100%, 20% calc(100% - 10px), 10% 100%, 0% calc(100% - 10px)
+      );
     }
 
     .banner-text {
