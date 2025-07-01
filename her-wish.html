@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Nailla Birthday</title>
   <style>
     html, body {
@@ -50,6 +50,7 @@
       color: gold;
       text-shadow: 0 0 10px #fff, 0 0 20px gold, 0 0 30px orange;
       animation: glow 2s infinite alternate;
+      z-index: 5;
     }
 
     @keyframes glow {
@@ -61,40 +62,51 @@
       }
     }
 
-    /* Cake below age */
-    .cake {
+    /* 🎂 Cake below 25 */
+    .cake-emoji {
       position: absolute;
       top: 50%;
       left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 40px;
-      animation: cakePop 2s ease-in-out infinite alternate;
+      transform: translate(-50%, -30%);
+      font-size: 45px;
+      z-index: 5;
+      animation: bounce 2s infinite alternate;
     }
 
-    @keyframes cakePop {
-      from { transform: translate(-50%, -50%) scale(1); }
-      to { transform: translate(-50%, -52%) scale(1.1); }
+    @keyframes bounce {
+      from { transform: translate(-50%, -30%) scale(1); }
+      to { transform: translate(-50%, -32%) scale(1.1); }
+    }
+
+    /* 🎈 Reference emoji */
+    .reference-emoji {
+      position: absolute;
+      bottom: 100px;
+      right: 20px;
+      font-size: 30px;
+      color: white;
+      z-index: 5;
     }
 
     /* Balloons */
     .balloon {
       position: absolute;
-      bottom: -100px;
+      bottom: -80px;
       width: 30px;
       height: 40px;
       background-color: red;
-      border-radius: 50% 50% 50% 50%;
-      animation: floatUp 8s linear infinite;
+      border-radius: 50% 50% 45% 45%;
+      animation: floatUp 7s linear infinite;
       opacity: 0.9;
     }
 
     .balloon::after {
       content: '';
       position: absolute;
-      bottom: -15px;
+      bottom: -20px;
       left: 50%;
       width: 2px;
-      height: 15px;
+      height: 20px;
       background: white;
       transform: translateX(-50%);
     }
@@ -105,7 +117,7 @@
         opacity: 1;
       }
       100% {
-        transform: translateY(-120vh) scale(1.2);
+        transform: translateY(-130vh) scale(1.2);
         opacity: 0;
       }
     }
@@ -126,6 +138,7 @@
       cursor: pointer;
       box-shadow: 0 0 10px pink;
       transition: background 0.3s;
+      z-index: 10;
     }
 
     .continue-btn:hover {
@@ -144,7 +157,10 @@
   <div class="age">25</div>
 
   <!-- Cake Emoji -->
-  <div class="cake">🎂</div>
+  <div class="cake-emoji">🎂</div>
+
+  <!-- 🎈 Reference Balloon Emoji -->
+  <div class="reference-emoji">🎈</div>
 
   <!-- Continue Button -->
   <button class="continue-btn" onclick="window.location.href='dive.html'">
