@@ -13,46 +13,42 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    user-select: none;
   }
   #top-text {
-    margin-top: 20px;
+    margin-top: 25px;
     font-weight: 700;
-    font-size: 1.3rem;
+    font-size: 1.4rem;
     text-align: center;
-    letter-spacing: 1.5px;
+    letter-spacing: 1.6px;
     text-transform: uppercase;
-    max-width: 90vw;
+    max-width: 95vw;
   }
   #flower-container {
     margin-top: 80px;
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    user-select: none;
-    min-height: 260px; /* reserve space */
+    gap: 18px;
+    min-height: 300px;
   }
   .flower-line {
-    font-size: 3.5rem;
+    font-size: 4rem; /* big emoji */
     text-align: center;
-    opacity: 0;
-    transition: opacity 0.8s ease-in-out;
-  }
-  .visible {
-    opacity: 1 !important;
+    user-select: none;
   }
   #continue-btn {
     margin-top: 50px;
-    padding: 12px 30px;
-    font-size: 1.4rem;
+    padding: 12px 32px;
+    font-size: 1.5rem;
     font-weight: 600;
     color: #ffc0cb;
     background: transparent;
-    border: 2.5px solid #ffc0cb;
-    border-radius: 30px;
+    border: 3px solid #ffc0cb;
+    border-radius: 35px;
     cursor: pointer;
-    display: none;
+    display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     user-select: none;
     transition: background-color 0.3s ease, color 0.3s ease;
   }
@@ -60,17 +56,11 @@
     background-color: #ffc0cb;
     color: black;
   }
-  #continue-btn span.arrow {
-    font-size: 1.4rem;
-    display: inline-block;
-    transform: translateX(0);
-    transition: transform 0.3s ease;
+  #continue-btn .arrow {
+    font-size: 1.6rem;
   }
-  #continue-btn:hover span.arrow {
-    transform: translateX(6px);
-  }
-  #continue-btn span.heart {
-    font-size: 1.4rem;
+  #continue-btn .heart {
+    font-size: 1.6rem;
     color: #ff4d6d;
   }
 </style>
@@ -82,65 +72,15 @@
   </div>
 
   <div id="flower-container">
-    <div class="flower-line" id="line1"></div>
-    <div class="flower-line" id="line2"></div>
-    <div class="flower-line" id="line3"></div>
-    <div class="flower-line" id="line4"></div>
+    <div class="flower-line" style="color: red;">🌷 🌷 🌷 🌷 🌷 🌷 🌷</div>
+    <div class="flower-line" style="color: pink;">🌷 🌷 🌷 🌷 🌷 🌷 🌷 🌷 🌷</div>
+    <div class="flower-line" style="color: white;">🌷 🌷 🌷 🌷 🌷 🌷</div>
+    <div class="flower-line" style="color: blue;">🌷 🌷 🌷 🌷 🌷 🌷 🌷 🌷</div>
   </div>
 
-  <button id="continue-btn" aria-label="Continue to her wish page">
+  <button id="continue-btn" aria-label="Continue to her wish page" onclick="location.href='her-wish.html'">
     Continue <span class="arrow">→</span> <span class="heart">❤</span>
   </button>
-
-<script>
-  const flowerEmoji = "🌷";
-  const colors = [
-    "#FF6B6B", "#FFD93D", "#6BCB77", "#4D96FF",
-    "#FF9F1C", "#D81159", "#8F2D56", "#FFC0CB"
-  ];
-
-  function getRandomColor() {
-    return colors[Math.floor(Math.random() * colors.length)];
-  }
-
-  const linesData = [7, 9, 6, 8];
-
-  function buildFlowerLine(count) {
-    let lineStr = "";
-    for(let i=0; i<count; i++) {
-      const color = getRandomColor();
-      lineStr += <span style="color:${color}; margin:0 6px; display:inline-block;">${flowerEmoji}</span>;
-    }
-    return lineStr;
-  }
-
-  // Populate lines immediately so that HTML is ready
-  for(let i=0; i<linesData.length; i++) {
-    document.getElementById(line${i+1}).innerHTML = buildFlowerLine(linesData[i]);
-  }
-
-  const lines = [...document.querySelectorAll('.flower-line')];
-  const continueBtn = document.getElementById('continue-btn');
-
-  // Show lines sequentially with delay using async/await for clarity
-  async function showLinesSequentially() {
-    for(let i = 0; i < lines.length; i++) {
-      lines[i].classList.add('visible');
-      await new Promise(r => setTimeout(r, 1000));  // wait 1 sec
-    }
-    // After all lines shown, wait 1 sec then show button
-    await new Promise(r => setTimeout(r, 1000));
-    continueBtn.style.display = 'flex';
-  }
-
-  window.onload = () => {
-    showLinesSequentially();
-  };
-
-  continueBtn.onclick = () => {
-    window.location.href = "her-wish.html";
-  }
-</script>
 
 </body>
 </html>
