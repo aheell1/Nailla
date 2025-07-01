@@ -2,158 +2,141 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Nailla's Bouquet</title>
+  <title>3D Colorful Flower</title>
   <style>
-    html, body {
+    * {
       margin: 0;
       padding: 0;
-      background: black;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: black;
       overflow: hidden;
-      font-family: 'Segoe UI', sans-serif;
-    }
-
-    h1 {
-      color: white;
-      text-align: center;
-      font-weight: bold;
-      font-size: 20px;
-      margin-top: 30px;
-      text-transform: uppercase;
-    }
-
-    /* 🎯 Flower Bouquet Animation */
-    .flower-container {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) scale(0);
-      animation: appear 4s ease forwards;
-    }
-
-    .stem {
-      width: 6px;
-      height: 120px;
-      background: green;
-      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: sans-serif;
+      perspective: 1000px;
     }
 
     .flower {
-      width: 30px;
-      height: 30px;
-      background: red;
-      border-radius: 50%;
-      position: absolute;
-      animation: bloom 0.5s ease forwards;
+      position: relative;
+      width: 30vmin;
+      height: 30vmin;
+      transform-style: preserve-3d;
+      animation: rotateFlower 15s linear infinite;
     }
 
-    .f1 { top: -30px; left: -20px; background: deeppink; animation-delay: 0.3s; }
-    .f2 { top: -30px; left: 20px; background: hotpink; animation-delay: 0.6s; }
-    .f3 { top: -60px; left: 0px; background: crimson; animation-delay: 0.9s; }
-    .f4 { top: -60px; left: -30px; background: orangered; animation-delay: 1.2s; }
-    .f5 { top: -60px; left: 30px; background: pink; animation-delay: 1.5s; }
-
-    @keyframes appear {
-      to { transform: translate(-50%, -50%) scale(1); }
-    }
-
-    @keyframes bloom {
-      from { transform: scale(0); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
-
-    /* 🌹 Petals */
     .petal {
       position: absolute;
-      width: 25px;
-      height: 25px;
-      background: red;
-      border-radius: 50% 70% 50% 70% / 70% 50% 70% 50%;
-      opacity: 0.8;
-      transform: rotate(0deg);
-      animation: fall linear infinite;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
     }
 
-    @keyframes fall {
-      0% {
-        transform: translateY(0) rotate(0deg);
+    .box {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transform-style: preserve-3d;
+    }
+
+    .shape {
+      width: 0.5em;
+      height: 0.5em;
+      border-radius: 50%;
+      background-color: currentColor;
+      box-shadow: 0 0 5px currentColor;
+    }
+
+    @keyframes rotateFlower {
+      from {
+        transform: rotateY(0deg);
       }
-      100% {
-        transform: translateY(100vh) rotate(360deg);
-        opacity: 0;
+      to {
+        transform: rotateY(360deg);
       }
-    }
-
-    /* ❤️ Continue Button */
-    .continue-button {
-      position: absolute;
-      bottom: 50px;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #ffc0cb;
-      color: black;
-      border: none;
-      padding: 10px 20px;
-      font-size: 18px;
-      border-radius: 20px;
-      cursor: pointer;
-      display: none;
-      font-weight: bold;
-    }
-
-    .show {
-      display: block;
-      animation: fadeIn 1s ease forwards;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
     }
   </style>
 </head>
 <body>
-
-  <h1>WAISE TO AAP POORA BAGHEECHA DESERVE KARTI HAIN LEKIN YAHAN ITNE HI LAG PAAYE</h1>
-
-  <!-- 🌸 Animated Bouquet -->
-  <div class="flower-container">
-    <div class="stem"></div>
-    <div class="flower f1"></div>
-    <div class="flower f2"></div>
-    <div class="flower f3"></div>
-    <div class="flower f4"></div>
-    <div class="flower f5"></div>
-  </div>
-
-  <!-- ❤️ Continue Button -->
-  <button class="continue-button" onclick="location.href='her-wish.html'">Continue → ❤</button>
+  <div class="flower"></div>
 
   <script>
-    // 🌹 Create Falling Petals
-    function createPetal() {
-      const petal = document.createElement('div');
-      petal.classList.add('petal');
+    console.clear();
+    var doc = document;
+    var flower = doc.querySelector('.flower');
 
-      const side = Math.random() < 0.5 ? 'left' : 'right';
-      petal.style.left = side === 'left'
-        ? ${Math.random() * 100}px
-        : ${window.innerWidth - Math.random() * 100}px;
+    var maxParts = 20;
+    var maxPetalsDef = 6;
+    var maxPetals = maxPetalsDef;
 
-      petal.style.animationDuration = ${4 + Math.random() * 3}s;
-      petal.style.width = ${20 + Math.random() * 10}px;
-      petal.style.height = petal.style.width;
-      document.body.appendChild(petal);
+    var partsFontStepDef = 25 / maxParts;
+    var partsFontStep = partsFontStepDef;
+    var huetStep = 150 / maxParts;
 
-      setTimeout(() => petal.remove(), 8000);
+    createFlower();
+
+    function createFlower() {
+      var angle = 360 / maxPetals;
+      for (var i = 0; i < maxPetals; i++) {
+        var petal = createPetal();
+        var currAngle = angle * i + 'deg';
+        var transform = 'transform: rotateY(' + currAngle + ') rotateX(-30deg) translateZ(9vmin)';
+        petal.setAttribute('style', transform);
+        flower.appendChild(petal);
+      }
     }
 
-    setInterval(createPetal, 300);
+    function createPetal() {
+      var box = createBox(null, 0);
+      var petal = doc.createElement('div');
+      petal.classList.add('petal');
 
-    // 🎬 Show Continue Button after animation
-    setTimeout(() => {
-      document.querySelector('.continue-button').classList.add('show');
-    }, 4500);
+      for (var i = 1; i <= maxParts; i++) {
+        newBox = createBox(box, i);
+        box = newBox;
+      }
+
+      petal.appendChild(box);
+      return petal;
+    }
+
+    function createBox(box, pos) {
+      var fontSize = partsFontStep * (maxParts - pos) + 'vmin';
+      var half = maxParts / 2;
+      var bright = '50';
+
+      if (pos < half + 1) {
+        fontSize = partsFontStep * pos + 'vmin';
+      } else {
+        bright = 10 + 40 / half * (maxParts - pos);
+      }
+
+      var color = 'hsl(' + huetStep * pos + ', 100%, ' + bright + '%)';
+
+      var newShape = doc.createElement('div');
+      newShape.classList.add('shape');
+
+      var newBox = doc.createElement('div');
+      newBox.classList.add('box');
+      var boxStyle = [
+        'color: ' + color,
+        'font-size: ' + fontSize
+      ].join(';');
+      newBox.setAttribute('style', boxStyle);
+
+      if (box) {
+        newBox.appendChild(box);
+      }
+
+      newBox.appendChild(newShape);
+      return newBox;
+    }
   </script>
-
 </body>
 </html>
