@@ -19,9 +19,11 @@
       font-size: 20px;
       text-transform: uppercase;
       margin-top: 30px;
+      z-index: 5;
+      position: relative;
     }
 
-    /* Petals */
+    /* Petal styles */
     .petal {
       position: fixed;
       width: 25px;
@@ -29,8 +31,8 @@
       background-color: red;
       border-radius: 50%;
       opacity: 0.8;
+      animation: fall linear;
       z-index: 1;
-      animation: fall linear infinite;
     }
 
     @keyframes fall {
@@ -39,37 +41,21 @@
         opacity: 1;
       }
       100% {
-        transform: translateY(110vh) rotate(360deg);
+        transform: translateY(100vh) rotate(360deg);
         opacity: 0;
       }
     }
 
-    /* Center bouquet area */
+    /* Bouquet animation */
     #bouquet {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 120px;
-      height: 200px;
       display: flex;
       flex-direction: column;
       align-items: center;
       z-index: 2;
-    }
-
-    .stem {
-      width: 10px;
-      height: 60px;
-      background-color: green;
-      margin-top: 20px;
-      animation: growStem 2s forwards;
-      transform-origin: bottom;
-    }
-
-    @keyframes growStem {
-      0% { height: 0; }
-      100% { height: 60px; }
     }
 
     .flower {
@@ -79,36 +65,57 @@
       border-radius: 50%;
       margin: 5px;
       opacity: 0;
-      animation: bloom 1s forwards;
+      transform: scale(0);
+      animation: bloom 0.5s forwards;
     }
 
-    .flower:nth-child(2) { animation-delay: 2s; }
-    .flower:nth-child(3) { animation-delay: 2.3s; }
-    .flower:nth-child(4) { animation-delay: 2.6s; }
-    .flower:nth-child(5) { animation-delay: 2.9s; }
+    .flower:nth-child(1) { animation-delay: 0.5s; background-color: red; }
+    .flower:nth-child(2) { animation-delay: 1s; background-color: crimson; }
+    .flower:nth-child(3) { animation-delay: 1.5s; background-color: darkred; }
+    .flower:nth-child(4) { animation-delay: 2s; background-color: red; }
 
     @keyframes bloom {
-      0% { transform: scale(0); opacity: 0; }
-      100% { transform: scale(1); opacity: 1; }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
     }
 
     .ribbon {
       width: 40px;
       height: 10px;
       background-color: pink;
-      margin-top: 5px;
       border-radius: 5px;
+      margin-top: 5px;
       opacity: 0;
-      animation: showRibbon 1s forwards;
-      animation-delay: 3.6s;
+      transform: scale(0);
+      animation: showRibbon 0.5s forwards;
+      animation-delay: 2.8s;
     }
 
     @keyframes showRibbon {
-      0% { transform: scale(0); opacity: 0; }
-      100% { transform: scale(1); opacity: 1; }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
     }
 
-    /* Continue button */
+    .stem {
+      width: 10px;
+      height: 0;
+      background-color: green;
+      margin-top: 5px;
+      animation: growStem 1s forwards;
+      animation-delay: 3.3s;
+    }
+
+    @keyframes growStem {
+      to {
+        height: 60px;
+      }
+    }
+
+    /* Continue Button */
     #continueBtn {
       position: absolute;
       top: 75%;
@@ -122,9 +129,8 @@
       border-radius: 25px;
       cursor: pointer;
       display: none;
-      z-index: 3;
-      box-shadow: 0 0 10px rgba(255,255,255,0.2);
-      transition: background 0.3s;
+      z-index: 5;
+      box-shadow: 0 0 10px rgba(255,255,255,0.3);
     }
 
     #continueBtn:hover {
@@ -136,47 +142,46 @@
 
   <h1>WAISE TO AAP POORA BAGHEECHA DESERVE KARTI HAIN LEKIN YAHAN ITNE HI LAG PAYE</h1>
 
-  <!-- Center bouquet -->
   <div id="bouquet">
-    <div class="flower" style="background-color: red;"></div>
-    <div class="flower" style="background-color: crimson;"></div>
-    <div class="flower" style="background-color: darkred;"></div>
-    <div class="flower" style="background-color: red;"></div>
+    <div class="flower"></div>
+    <div class="flower"></div>
+    <div class="flower"></div>
+    <div class="flower"></div>
     <div class="ribbon"></div>
     <div class="stem"></div>
   </div>
 
-  <!-- Continue Button -->
   <button id="continueBtn" onclick="window.location.href='her-wish.html'">Continue → ❤</button>
 
   <script>
-    // Create rose petals
+    // Create petals falling from both sides
     function createPetal(side) {
       const petal = document.createElement('div');
       petal.classList.add('petal');
 
-      // Random position on left or right
-      petal.style.left = side === 'left'
-        ? ${Math.random() * 80}px
-        : ${window.innerWidth - (Math.random() * 80)}px;
+      if (side === 'left') {
+        petal.style.left = Math.random() * 100 + 'px';
+      } else {
+        petal.style.left = window.innerWidth - (Math.random() * 100) + 'px';
+      }
 
-      // Random duration
-      const duration = Math.random() * 3 + 3; // 3s–6s
-      petal.style.animationDuration = ${duration}s;
+      const duration = Math.random() * 3 + 3; // 3–6 seconds
+      petal.style.animationDuration = duration + 's';
 
       document.body.appendChild(petal);
 
-      // Remove after animation
-      setTimeout(() => petal.remove(), duration * 1000);
+      setTimeout(() => {
+        petal.remove();
+      }, duration * 1000);
     }
 
-    // Loop petals creation
-    setInterval(() => createPetal('left'), 500);
-    setInterval(() => createPetal('right'), 500);
+    // Start petals falling every 300ms
+    setInterval(() => createPetal('left'), 300);
+    setInterval(() => createPetal('right'), 300);
 
-    // Show continue button after animation
+    // Show continue button after 5s
     setTimeout(() => {
-      document.getElementById("continueBtn").style.display = 'block';
+      document.getElementById('continueBtn').style.display = 'block';
     }, 5000);
   </script>
 
