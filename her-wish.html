@@ -25,6 +25,7 @@
       text-transform: uppercase;
       padding: 10px 0;
       background: #222;
+      z-index: 10;
     }
 
     .banner-text {
@@ -60,16 +61,42 @@
       }
     }
 
+    /* Cake below age */
+    .cake {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 40px;
+      animation: cakePop 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes cakePop {
+      from { transform: translate(-50%, -50%) scale(1); }
+      to { transform: translate(-50%, -52%) scale(1.1); }
+    }
+
     /* Balloons */
     .balloon {
       position: absolute;
       bottom: -100px;
-      width: 40px;
-      height: 60px;
-      border-radius: 50% 50% 45% 45%;
+      width: 30px;
+      height: 40px;
       background-color: red;
+      border-radius: 50% 50% 50% 50%;
       animation: floatUp 8s linear infinite;
-      opacity: 0.8;
+      opacity: 0.9;
+    }
+
+    .balloon::after {
+      content: '';
+      position: absolute;
+      bottom: -15px;
+      left: 50%;
+      width: 2px;
+      height: 15px;
+      background: white;
+      transform: translateX(-50%);
     }
 
     @keyframes floatUp {
@@ -115,6 +142,9 @@
 
   <!-- Age Display -->
   <div class="age">25</div>
+
+  <!-- Cake Emoji -->
+  <div class="cake">🎂</div>
 
   <!-- Continue Button -->
   <button class="continue-btn" onclick="window.location.href='dive.html'">
