@@ -21,37 +21,69 @@
       text-transform: uppercase;
     }
 
-    .bouquet {
+    /* 🎯 Flower Bouquet Animation */
+    .flower-container {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%) scale(0);
-      animation: growBouquet 4s ease forwards;
+      animation: appear 4s ease forwards;
     }
 
-    @keyframes growBouquet {
-      to {
-        transform: translate(-50%, -50%) scale(1);
-      }
+    .stem {
+      width: 6px;
+      height: 120px;
+      background: green;
+      margin: 0 auto;
     }
 
+    .flower {
+      width: 30px;
+      height: 30px;
+      background: red;
+      border-radius: 50%;
+      position: absolute;
+      animation: bloom 0.5s ease forwards;
+    }
+
+    .f1 { top: -30px; left: -20px; background: deeppink; animation-delay: 0.3s; }
+    .f2 { top: -30px; left: 20px; background: hotpink; animation-delay: 0.6s; }
+    .f3 { top: -60px; left: 0px; background: crimson; animation-delay: 0.9s; }
+    .f4 { top: -60px; left: -30px; background: orangered; animation-delay: 1.2s; }
+    .f5 { top: -60px; left: 30px; background: pink; animation-delay: 1.5s; }
+
+    @keyframes appear {
+      to { transform: translate(-50%, -50%) scale(1); }
+    }
+
+    @keyframes bloom {
+      from { transform: scale(0); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    /* 🌹 Petals */
     .petal {
       position: absolute;
-      width: 20px;
-      height: 20px;
-      background: radial-gradient(circle at 30% 30%, red, darkred);
-      border-radius: 50% 50% 50% 50%;
+      width: 25px;
+      height: 25px;
+      background: red;
+      border-radius: 50% 70% 50% 70% / 70% 50% 70% 50%;
       opacity: 0.8;
+      transform: rotate(0deg);
       animation: fall linear infinite;
     }
 
     @keyframes fall {
-      to {
-        transform: translateY(110vh) rotate(360deg);
+      0% {
+        transform: translateY(0) rotate(0deg);
+      }
+      100% {
+        transform: translateY(100vh) rotate(360deg);
         opacity: 0;
       }
     }
 
+    /* ❤️ Continue Button */
     .continue-button {
       position: absolute;
       bottom: 50px;
@@ -83,36 +115,32 @@
 
   <h1>WAISE TO AAP POORA BAGHEECHA DESERVE KARTI HAIN LEKIN YAHAN ITNE HI LAG PAAYE</h1>
 
-  <!-- SVG Flower Bouquet -->
-  <svg class="bouquet" width="200" height="300" viewBox="0 0 200 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <g>
-      <!-- Stems -->
-      <rect x="97" y="100" width="6" height="150" fill="green"/>
-      <rect x="90" y="100" width="4" height="140" fill="green"/>
-      <rect x="106" y="100" width="4" height="130" fill="green"/>
+  <!-- 🌸 Animated Bouquet -->
+  <div class="flower-container">
+    <div class="stem"></div>
+    <div class="flower f1"></div>
+    <div class="flower f2"></div>
+    <div class="flower f3"></div>
+    <div class="flower f4"></div>
+    <div class="flower f5"></div>
+  </div>
 
-      <!-- Flowers -->
-      <circle cx="100" cy="90" r="15" fill="red"/>
-      <circle cx="85" cy="80" r="12" fill="deeppink"/>
-      <circle cx="115" cy="80" r="12" fill="hotpink"/>
-      <circle cx="95" cy="60" r="10" fill="orangered"/>
-      <circle cx="105" cy="60" r="10" fill="crimson"/>
-    </g>
-  </svg>
-
+  <!-- ❤️ Continue Button -->
   <button class="continue-button" onclick="location.href='her-wish.html'">Continue → ❤</button>
 
   <script>
-    // Generate falling rose petals
+    // 🌹 Create Falling Petals
     function createPetal() {
       const petal = document.createElement('div');
       petal.classList.add('petal');
-      petal.style.left = Math.random() < 0.5
+
+      const side = Math.random() < 0.5 ? 'left' : 'right';
+      petal.style.left = side === 'left'
         ? ${Math.random() * 100}px
         : ${window.innerWidth - Math.random() * 100}px;
 
       petal.style.animationDuration = ${4 + Math.random() * 3}s;
-      petal.style.width = ${15 + Math.random() * 10}px;
+      petal.style.width = ${20 + Math.random() * 10}px;
       petal.style.height = petal.style.width;
       document.body.appendChild(petal);
 
@@ -121,7 +149,7 @@
 
     setInterval(createPetal, 300);
 
-    // Show button after bouquet animation
+    // 🎬 Show Continue Button after animation
     setTimeout(() => {
       document.querySelector('.continue-button').classList.add('show');
     }, 4500);
