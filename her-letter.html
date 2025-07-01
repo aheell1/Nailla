@@ -22,27 +22,19 @@
       font-size: 2.5em;
       font-family: 'Brush Script MT', cursive;
       font-weight: bold;
-      margin-top: -50px;
+      margin-top: -40px;
       margin-bottom: 30px;
       text-align: center;
     }
 
-    .emoji-row {
-      font-size: 4em;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .emoji {
+      font-size: 5em;
       cursor: pointer;
-      transition: transform 0.2s;
+      transition: transform 0.3s;
     }
 
-    .emoji-row:hover {
+    .emoji:hover {
       transform: scale(1.1);
-    }
-
-    .heart {
-      font-size: 1.5em;
-      margin: 0 10px;
     }
 
     .letter {
@@ -60,6 +52,7 @@
       animation: openLetter 1s ease forwards;
       text-align: center;
       margin-top: 30px;
+      line-height: 1.6;
     }
 
     @keyframes openLetter {
@@ -100,16 +93,18 @@
 
   <h1>CLICK ON LETTER</h1>
 
-  <div class="emoji-row" onclick="showLetter()">
-    ✉️ <div class="heart">❤</div> ✉️
-  </div>
+  <div class="emoji" onclick="showLetter()">💌</div>
 
   <div class="letter" id="letter">
     <p>
-      Mere jazbaat lafzon mein utarna mushkil hai,<br>
-      Magar phir bhi, is chhoti si chitthi mein tumhare liye pyaar bhar diya hai... 💌<br><br>
-      Tum meri muskurahat ho, meri subah ka noor aur raat ki dua ho.<br>
-      Har din, har lamha tumhara shukriya karta hoon...❤
+      Assalamualaikum<br>
+      Umeed hain ap khair se hongi<br>
+      Saal Girah Mubarak Apko 🎊<br><br>
+      M khush hu apki existence se<br>
+      Aap mere liye bht khaas ho<br>
+      Aur hamesha rahogi bhi<br><br>
+      Thank You paida hone k liye<br>
+      Stay Blessed & Stay Happy ❤
     </p>
   </div>
 
