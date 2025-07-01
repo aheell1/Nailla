@@ -5,24 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Nailla's Bouquet</title>
 <style>
-  /* Basic reset */
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
   body, html {
-    height: 100%;
-    background-color: black;
+    margin: 0; padding: 0; height: 100%;
+    background: black;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: white;
     display: flex;
     flex-direction: column;
     align-items: center;
   }
-
-  /* Top text style */
   #top-text {
     margin-top: 20px;
     font-weight: 700;
@@ -32,35 +23,29 @@
     text-transform: uppercase;
     max-width: 90vw;
   }
-
-  /* Container for flower lines */
   #flower-container {
     margin-top: 80px;
     display: flex;
     flex-direction: column;
     gap: 15px;
     user-select: none;
+    min-height: 260px; /* reserve space */
   }
-
-  /* Each flower line styling */
   .flower-line {
-    font-size: 3.5rem; /* Big emojis */
+    font-size: 3.5rem;
     text-align: center;
     opacity: 0;
     transition: opacity 0.8s ease-in-out;
   }
-
-  .flower-line.visible {
-    opacity: 1;
+  .visible {
+    opacity: 1 !important;
   }
-
-  /* Continue button style */
   #continue-btn {
     margin-top: 50px;
     padding: 12px 30px;
     font-size: 1.4rem;
     font-weight: 600;
-    color: #ffc0cb; /* baby pink */
+    color: #ffc0cb;
     background: transparent;
     border: 2.5px solid #ffc0cb;
     border-radius: 30px;
@@ -71,24 +56,19 @@
     user-select: none;
     transition: background-color 0.3s ease, color 0.3s ease;
   }
-
   #continue-btn:hover {
     background-color: #ffc0cb;
     color: black;
   }
-
-  /* Arrow and heart inside button */
   #continue-btn span.arrow {
     font-size: 1.4rem;
     display: inline-block;
     transform: translateX(0);
     transition: transform 0.3s ease;
   }
-
   #continue-btn:hover span.arrow {
     transform: translateX(6px);
   }
-
   #continue-btn span.heart {
     font-size: 1.4rem;
     color: #ff4d6d;
@@ -113,80 +93,53 @@
   </button>
 
 <script>
-  // Lines data: each line is an array of flowers with colors
-  // We will build flower strings with colored emojis wrapped in <span> with style color
   const flowerEmoji = "🌷";
-
-  // Some bright pastel colors for flower emojis
   const colors = [
-    "#FF6B6B",  // red-pink
-    "#FFD93D",  // yellow
-    "#6BCB77",  // green
-    "#4D96FF",  // blue
-    "#FF9F1C",  // orange
-    "#D81159",  // magenta
-    "#8F2D56",  // purple
-    "#FFC0CB"   // baby pink
+    "#FF6B6B", "#FFD93D", "#6BCB77", "#4D96FF",
+    "#FF9F1C", "#D81159", "#8F2D56", "#FFC0CB"
   ];
 
-  // Function to get random color from colors array
   function getRandomColor() {
     return colors[Math.floor(Math.random() * colors.length)];
   }
 
-  // Define lines with variable counts of flowers
-  const linesData = [
-    7,  // line 1 count
-    9,  // line 2 count
-    6,  // line 3 count
-    8   // line 4 count
-  ];
+  const linesData = [7, 9, 6, 8];
 
-  // For each line, build a colored flower string
   function buildFlowerLine(count) {
     let lineStr = "";
     for(let i=0; i<count; i++) {
       const color = getRandomColor();
-      // Wrap emoji in span with color style and small margin
       lineStr += <span style="color:${color}; margin:0 6px; display:inline-block;">${flowerEmoji}</span>;
     }
     return lineStr;
   }
 
-  // Fill flower lines content
+  // Populate lines immediately so that HTML is ready
   for(let i=0; i<linesData.length; i++) {
-    const lineEl = document.getElementById(line${i+1});
-    lineEl.innerHTML = buildFlowerLine(linesData[i]);
+    document.getElementById(line${i+1}).innerHTML = buildFlowerLine(linesData[i]);
   }
 
-  // Function to show lines one by one with delay and then show button
   const lines = [...document.querySelectorAll('.flower-line')];
   const continueBtn = document.getElementById('continue-btn');
 
-  function showLinesSequentially(lines, index = 0) {
-    if(index >= lines.length) {
-      // After last line visible, wait 1 sec then show button
-      setTimeout(() => {
-        continueBtn.style.display = 'flex';
-      }, 1000);
-      return;
+  // Show lines sequentially with delay using async/await for clarity
+  async function showLinesSequentially() {
+    for(let i = 0; i < lines.length; i++) {
+      lines[i].classList.add('visible');
+      await new Promise(r => setTimeout(r, 1000));  // wait 1 sec
     }
-    lines[index].classList.add('visible');
-    // Show next line after 1 second
-    setTimeout(() => {
-      showLinesSequentially(lines, index + 1);
-    }, 1000);
+    // After all lines shown, wait 1 sec then show button
+    await new Promise(r => setTimeout(r, 1000));
+    continueBtn.style.display = 'flex';
   }
 
-  // Start animation on page load
   window.onload = () => {
-    showLinesSequentially(lines);
+    showLinesSequentially();
   };
 
-  // Redirect on button click
-  continueBtn.addEventListener('click', () => {
+  continueBtn.onclick = () => {
     window.location.href = "her-wish.html";
-  });
+  }
 </script>
 
 </body>
